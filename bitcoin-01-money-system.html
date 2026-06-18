@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bitcoin Pitch · The Money System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     BITCOIN PITCH — SHARED DESIGN SYSTEM (identical on every slide)
+     ============================================================ */
+  :root{
+    --paper:#F2F1EC;
+    --card:#FBFAF6;
+    --ink:#1A1813;
+    --ink-soft:#6E685D;
+    --btc:#F7931A;
+    --btc-deep:#C56F08;
+    --line:rgba(26,24,19,.14);
+    --font-display:"Space Grotesk",system-ui,sans-serif;
+    --font-mono:"IBM Plex Mono",ui-monospace,monospace;
+    --font-body:"Inter",system-ui,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{min-height:100%;}
+  body{
+    background:#2a2722;
+    display:flex;flex-direction:column;align-items:center;
+    gap:18px;padding:26px 24px 40px;
+    font-family:var(--font-body);
+  }
+
+  /* ---- the audience-facing slide (16:9) ---- */
+  .slide{
+    position:relative;
+    width:min(1180px,100%);
+    aspect-ratio:16/9;
+    background:var(--paper);color:var(--ink);
+    border-radius:5px;overflow:hidden;
+    box-shadow:0 40px 90px -34px rgba(0,0,0,.72);
+    display:grid;grid-template-rows:auto 1fr auto;
+    padding:clamp(26px,3.2vw,44px);
+  }
+  .slide::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:repeating-linear-gradient(to bottom,transparent 0 38px,rgba(26,24,19,.025) 38px 39px);
+    mix-blend-mode:multiply;
+  }
+  .head{
+    position:relative;z-index:2;display:flex;justify-content:flex-end;align-items:baseline;
+    font-family:var(--font-mono);font-size:clamp(10px,.95vw,12px);
+    letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);
+  }
+  .head .tag{color:var(--btc-deep);font-weight:500;}
+  .foot{
+    position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;
+    padding-top:12px;border-top:1px solid var(--line);
+    font-family:var(--font-mono);font-size:clamp(9.5px,.95vw,11.5px);
+    letter-spacing:.1em;color:var(--ink-soft);
+  }
+  .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:500;}
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--btc);}
+  a.brand{text-decoration:none;transition:color .15s ease;}
+  a.brand:hover{color:var(--btc-deep);}
+
+  /* ---- slide content ---- */
+  .m-body{position:relative;z-index:2;align-self:center;display:grid;gap:clamp(12px,1.7vw,20px);}
+  .m-kicker{
+    font-family:var(--font-mono);font-size:clamp(10px,1vw,12.5px);
+    letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);
+  }
+  .m-title{
+    font-family:var(--font-display);font-weight:700;
+    font-size:clamp(30px,4.7vw,56px);line-height:.98;letter-spacing:-.02em;
+  }
+  .m-title .hl{color:var(--btc-deep);}
+  .m-sub{font-size:clamp(13px,1.45vw,17px);line-height:1.45;color:var(--ink-soft);max-width:60ch;}
+
+  .m-cols{display:grid;grid-template-columns:1.35fr 1fr;gap:clamp(18px,2.6vw,40px);align-items:start;}
+
+  .points{list-style:none;display:grid;gap:clamp(8px,1.1vw,13px);}
+  .points li{
+    position:relative;padding-left:22px;
+    font-size:clamp(12.5px,1.32vw,15.5px);line-height:1.4;color:var(--ink);
+  }
+  .points li::before{
+    content:"";position:absolute;left:0;top:.5em;
+    width:8px;height:8px;background:var(--btc);transform:rotate(45deg);
+  }
+  .points b{font-weight:600;}
+
+  .stats{display:grid;gap:clamp(8px,1.1vw,12px);}
+  .stat{
+    background:var(--card);border:1px solid var(--line);border-radius:7px;
+    padding:clamp(10px,1.3vw,15px) clamp(12px,1.5vw,17px);
+    display:flex;align-items:baseline;gap:12px;
+  }
+  .stat .num{
+    font-family:var(--font-display);font-weight:700;color:var(--btc-deep);
+    font-size:clamp(20px,2.5vw,30px);line-height:1;letter-spacing:-.01em;white-space:nowrap;
+  }
+  .stat .lab{font-size:clamp(11px,1.15vw,13px);line-height:1.3;color:var(--ink-soft);}
+
+  /* ============================================================
+     SPEAKER GUIDE — presenter only, not shown to the audience.
+     Crop to the .slide above when exporting an image for X.
+     ============================================================ */
+  .guide{
+    width:min(1180px,100%);
+    background:#211e19;color:#E9E5DC;
+    border-radius:5px;border:1px solid rgba(247,147,26,.25);
+    padding:clamp(20px,2.4vw,30px);
+  }
+  .guide-head{
+    display:flex;align-items:center;gap:10px;margin-bottom:16px;
+    font-family:var(--font-mono);font-size:clamp(10px,1vw,12px);
+    letter-spacing:.16em;text-transform:uppercase;color:var(--btc);
+  }
+  .guide-head .pill{
+    font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;
+    color:#211e19;background:var(--btc);padding:3px 8px;border-radius:20px;
+  }
+  .guide-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(16px,2vw,26px);}
+  .gblock h4{
+    font-family:var(--font-display);font-weight:600;color:#fff;
+    font-size:clamp(13px,1.35vw,16px);margin-bottom:7px;
+  }
+  .gblock h4 span{color:var(--btc);font-family:var(--font-mono);font-size:.7em;margin-right:7px;}
+  .gblock ul{list-style:none;display:grid;gap:6px;}
+  .gblock li{
+    position:relative;padding-left:15px;
+    font-size:clamp(12px,1.25vw,14px);line-height:1.45;color:#C9C3B6;
+  }
+  .gblock li::before{content:"›";position:absolute;left:0;color:var(--btc);font-weight:700;}
+  .gblock li b{color:#fff;font-weight:600;}
+  .guide-note{
+    margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1);
+    font-family:var(--font-mono);font-size:clamp(10px,1vw,11.5px);
+    letter-spacing:.04em;color:#8d877a;
+  }
+
+  @media (max-width:680px){
+    .m-cols{grid-template-columns:1fr;}
+    .guide-grid{grid-template-columns:1fr;}
+  }
+  /* ---- presenter mode toggle (one file, two modes) ---- */
+  .guide{display:none;}                          /* hidden by default → clean projection */
+  body.show-guide .guide{display:block;}
+  body{min-height:100vh;}
+  body:not(.show-guide){justify-content:center;} /* lone slide sits centered */
+  .guide-toggle{
+    position:fixed;right:18px;bottom:18px;z-index:60;
+    display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+    font-family:var(--font-mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:#1A1813;background:var(--btc);border:none;border-radius:24px;padding:10px 15px;
+    box-shadow:0 8px 22px -8px rgba(0,0,0,.55);opacity:.5;
+    transition:opacity .15s ease, transform .15s ease;
+  }
+  .guide-toggle:hover{opacity:1;transform:translateY(-1px);}
+  .guide-toggle:focus-visible{opacity:1;outline:2px solid #fff;outline-offset:2px;}
+  .guide-toggle .ic{width:7px;height:7px;border-radius:50%;background:#1A1813;}
+  body.show-guide .guide-toggle{opacity:1;}
+  @media print{.guide-toggle{display:none;}}
+</style>
+</head>
+<body>
+
+  <!-- ===================== AUDIENCE SLIDE ===================== -->
+  <section class="slide" role="img" aria-label="Slide: Money is created from nothing">
+    <header class="head">
+      <span class="tag">Module · The Money System</span>
+    </header>
+
+    <div class="m-body">
+      <div>
+        <p class="m-kicker">Foundations · What is money?</p>
+        <h1 class="m-title">Money is created <span class="hl">from nothing.</span></h1>
+        <p class="m-sub">Nobody asks you. No vote is taken. And most people have no idea
+          who actually makes the dollars in their account.</p>
+      </div>
+
+      <div class="m-cols">
+        <ul class="points">
+          <li><b>The Fed</b> creates new dollars out of thin air to buy bonds — no printing press required.</li>
+          <li><b>Your bank</b> creates fresh money every time it makes a loan. It's a keystroke, not your neighbor's savings.</li>
+          <li><b>Repay the loan</b> and that money vanishes again. Default, and it stays in the economy.</li>
+          <li><b>Cash is the exception.</b> The overwhelming majority of dollars exist only as digital entries.</li>
+        </ul>
+
+        <div class="stats">
+          <div class="stat"><span class="num">$22.8T</span><span class="lab">U.S. M2 money supply (2026)</span></div>
+          <div class="stat"><span class="num">0%</span><span class="lab">Bank reserve requirement since March 2020</span></div>
+          <div class="stat"><span class="num">~90%</span><span class="lab">of dollars are bank-created deposits, not cash</span></div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <a class="brand" href="https://x.com/PitchingBTC" target="_blank" rel="noopener"><span class="dot"></span>@PitchingBTC</a>
+      <span>Source: U.S. Federal Reserve · 01 · Mix &amp; match</span>
+    </footer>
+  </section>
+
+  <!-- ===================== SPEAKER GUIDE ===================== -->
+  <aside class="guide">
+    <div class="guide-head"><span class="pill">Speaker Guide</span> How to present this slide · ~2–3 min</div>
+
+    <div class="guide-grid">
+      <div class="gblock">
+        <h4><span>01</span>Open with a question</h4>
+        <ul>
+          <li>Ask the room: <b>"Where does a dollar actually come from?"</b></li>
+          <li>Most will say "the government prints it." Let that sit — then say: that's mostly wrong.</li>
+          <li>Hook: <b>over 90%</b> of dollars were never printed at all.</li>
+        </ul>
+      </div>
+
+      <div class="gblock">
+        <h4><span>02</span>The two money creators</h4>
+        <ul>
+          <li><b>The Fed</b> creates base money digitally — e.g. buying bonds during QE.</li>
+          <li><b>Commercial banks</b> create the rest by lending. Banks don't lend out savings — they create new deposits.</li>
+          <li>This isn't a conspiracy theory — it's how central banks describe it themselves.</li>
+        </ul>
+      </div>
+
+      <div class="gblock">
+        <h4><span>03</span>Use the loan analogy</h4>
+        <ul>
+          <li>"You take a <b>$10,000 loan</b>. The bank moves nothing from a vault — it just types 10,000 into your account."</li>
+          <li>That new money now exists and circulates in the economy.</li>
+          <li>Drive the kicker home: <b>since 2020 the reserve requirement is 0%</b> — nothing is legally required behind your deposit.</li>
+        </ul>
+      </div>
+
+      <div class="gblock">
+        <h4><span>04</span>Land it &amp; transition</h4>
+        <ul>
+          <li>Takeaway: <b>the supply of dollars is effectively unlimited</b>, and you have no say in it.</li>
+          <li>Bridge to the next slide: <b>"So what would money look like if it <i>couldn't</i> be created at will?"</b></li>
+          <li>That question is what Bitcoin answers.</li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Presenter toggle: guide hidden by default · click, press N, or open with #notes -->
+  <button class="guide-toggle" id="guideToggle" aria-pressed="false" title="Toggle speaker guide (N)">
+    <span class="ic" aria-hidden="true"></span><span class="lbl">Speaker Guide</span>
+  </button>
+  <script>
+    (function(){
+      var body=document.body,
+          btn=document.getElementById('guideToggle'),
+          lbl=btn.querySelector('.lbl');
+      function set(on){
+        body.classList.toggle('show-guide', on);
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        lbl.textContent = on ? 'Hide guide' : 'Speaker Guide';
+      }
+      if(location.hash === '#notes') set(true);
+      btn.addEventListener('click', function(){ set(!body.classList.contains('show-guide')); });
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'n' || e.key === 'N'){ set(!body.classList.contains('show-guide')); }
+      });
+    })();
+  </script>
+</body>
+</html>

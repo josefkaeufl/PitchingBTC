@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bitcoin Pitch · Presenter</title>
+<style>
+  :root{--btc:#F7931A;--ink:#16130f;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;background:#0d0c0b;overflow:hidden;
+    font-family:ui-monospace,"IBM Plex Mono",monospace;}
+
+  #frame{position:fixed;inset:0;width:100%;height:100%;border:0;background:#2a2722;
+    opacity:0;transition:opacity .28s ease;}
+  #frame.ready{opacity:1;}
+
+  .prog{position:fixed;left:0;top:0;height:3px;background:var(--btc);
+    z-index:30;width:0;transition:width .3s ease;}
+
+  .nav{position:fixed;top:50%;transform:translateY(-50%);z-index:20;
+    width:54px;height:54px;border:none;border-radius:50%;cursor:pointer;
+    background:rgba(247,147,26,.85);color:var(--ink);
+    font-size:26px;line-height:1;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 24px -8px rgba(0,0,0,.6);
+    opacity:0;transition:opacity .25s ease,background .15s ease;}
+  .nav:hover{background:var(--btc);}
+  .nav.prev{left:22px;} .nav.next{right:22px;}
+  body.ui .nav{opacity:.92;}
+  .nav:disabled{opacity:0 !important;pointer-events:none;}
+
+  .bar{position:fixed;left:0;right:0;bottom:0;z-index:20;height:46px;
+    display:flex;align-items:center;justify-content:space-between;padding:0 18px;
+    color:#cdc6b8;font-size:12px;letter-spacing:.08em;
+    background:linear-gradient(to top,rgba(0,0,0,.6),transparent);
+    opacity:0;transition:opacity .25s ease;}
+  body.ui .bar{opacity:1;}
+  .bar .title{color:#fff;text-transform:uppercase;letter-spacing:.14em;}
+  .bar .right{display:flex;gap:16px;align-items:center;}
+  .bar button{background:none;border:1px solid rgba(255,255,255,.28);color:#cdc6b8;
+    border-radius:6px;padding:6px 11px;font:inherit;cursor:pointer;letter-spacing:.06em;}
+  .bar button:hover{color:#fff;border-color:#fff;}
+  .count b{color:var(--btc);}
+
+  .hint{position:fixed;left:50%;bottom:58px;transform:translateX(-50%);z-index:20;
+    color:#8d877a;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    opacity:0;transition:opacity .4s ease;}
+  body.ui .hint{opacity:1;}
+
+  .overlay{position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;
+    background:#0d0c0b;color:#cdc6b8;text-align:center;padding:30px;
+    font-size:14px;line-height:1.65;letter-spacing:.04em;}
+  .overlay.hidden{display:none;}
+  .overlay h2{color:#fff;font-size:18px;margin-bottom:12px;letter-spacing:.06em;}
+  .overlay code{color:var(--btc);background:rgba(247,147,26,.12);
+    padding:2px 7px;border-radius:5px;font-family:inherit;}
+</style>
+</head>
+<body class="ui">
+  <div class="prog" id="prog"></div>
+  <iframe id="frame" title="Current slide"></iframe>
+
+  <button class="nav prev" id="prev" aria-label="Previous slide">&#8249;</button>
+  <button class="nav next" id="next" aria-label="Next slide">&#8250;</button>
+
+  <div class="bar">
+    <span class="title" id="title">Bitcoin Pitch</span>
+    <div class="right">
+      <span class="count"><b id="cur">&ndash;</b> / <span id="tot">&ndash;</span></span>
+      <button id="fs">Fullscreen</button>
+    </div>
+  </div>
+
+  <div class="hint">&larr; &rarr; or Space &middot; F = fullscreen</div>
+
+  <div class="overlay hidden" id="error">
+    <div>
+      <h2>No slides found</h2>
+      <p>Make sure <code>slides.js</code> sits in the same folder and lists at least one slide.</p>
+    </div>
+  </div>
+
+  <!-- slide order comes from this file: -->
+  <script src="slides.js"></script>
+  <script>
+  var SLIDES = [], i = 0;
+
+  var frame = document.getElementById('frame'),
+      prevBtn = document.getElementById('prev'),
+      nextBtn = document.getElementById('next'),
+      curEl = document.getElementById('cur'),
+      totEl = document.getElementById('tot'),
+      titleEl = document.getElementById('title'),
+      progEl = document.getElementById('prog'),
+      errorEl = document.getElementById('error');
+
+  function parseList(text){
+    return (text || '').split(/\r?\n/)
+      .map(function(l){ return l.trim(); })
+      .filter(function(l){ return l && l.charAt(0) !== '#'; })
+      .map(function(l){
+        var bar = l.indexOf('|');
+        var file = (bar === -1 ? l : l.slice(0, bar)).trim();
+        var title = (bar === -1 ? file.replace(/\.html?$/i, '') : l.slice(bar + 1).trim());
+        return { file: file, title: title };
+      });
+  }
+
+  function show(n){
+    i = Math.max(0, Math.min(SLIDES.length - 1, n));
+    frame.classList.remove('ready');
+    frame.onload = function(){
+      frame.classList.add('ready');
+      try { frame.contentDocument.addEventListener('keydown', onKey); } catch (e) {}
+    };
+    frame.src = SLIDES[i].file;
+    curEl.textContent = i + 1;
+    titleEl.textContent = SLIDES[i].title;
+    progEl.style.width = (SLIDES.length < 2 ? 100 : (i / (SLIDES.length - 1) * 100)) + '%';
+    prevBtn.disabled = (i === 0);
+    nextBtn.disabled = (i === SLIDES.length - 1);
+    flashUI();
+  }
+
+  function next(){ if(i < SLIDES.length - 1) show(i + 1); }
+  function prev(){ if(i > 0) show(i - 1); }
+
+  function onKey(e){
+    switch(e.key){
+      case 'ArrowRight': case ' ': case 'PageDown': e.preventDefault(); next(); break;
+      case 'ArrowLeft':  case 'PageUp':            e.preventDefault(); prev(); break;
+      case 'Home': show(0); break;
+      case 'End':  show(SLIDES.length - 1); break;
+      case 'f': case 'F': toggleFs(); break;
+    }
+  }
+
+  function toggleFs(){
+    if(!document.fullscreenElement){ document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); }
+    else { document.exitFullscreen && document.exitFullscreen(); }
+  }
+
+  var hideTimer;
+  function flashUI(){
+    document.body.classList.add('ui');
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(function(){ document.body.classList.remove('ui'); }, 2600);
+  }
+
+  SLIDES = parseList(window.SLIDES_TXT);
+  if(SLIDES.length === 0){
+    errorEl.classList.remove('hidden');
+  } else {
+    totEl.textContent = SLIDES.length;
+    document.addEventListener('keydown', onKey);
+    document.addEventListener('mousemove', flashUI);
+    nextBtn.addEventListener('click', next);
+    prevBtn.addEventListener('click', prev);
+    document.getElementById('fs').addEventListener('click', toggleFs);
+    show(0);
+  }
+  </script>
+</body>
+</html>

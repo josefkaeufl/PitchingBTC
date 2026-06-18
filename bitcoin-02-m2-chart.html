@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bitcoin Pitch · The Cost of Infinite Money</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     BITCOIN PITCH — SHARED DESIGN SYSTEM (identical on every slide)
+     ============================================================ */
+  :root{
+    --paper:#F2F1EC;--card:#FBFAF6;--ink:#1A1813;--ink-soft:#6E685D;
+    --btc:#F7931A;--btc-deep:#C56F08;--line:rgba(26,24,19,.14);
+    --font-display:"Space Grotesk",system-ui,sans-serif;
+    --font-mono:"IBM Plex Mono",ui-monospace,monospace;
+    --font-body:"Inter",system-ui,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{min-height:100%;}
+  body{background:#2a2722;display:flex;flex-direction:column;align-items:center;
+    gap:18px;padding:26px 24px 40px;font-family:var(--font-body);}
+
+  .slide{
+    position:relative;width:min(1180px,100%);aspect-ratio:16/9;
+    background:var(--paper);color:var(--ink);border-radius:5px;overflow:hidden;
+    box-shadow:0 40px 90px -34px rgba(0,0,0,.72);
+    display:grid;grid-template-rows:auto 1fr auto;padding:clamp(26px,3.2vw,44px);
+  }
+  .slide::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:repeating-linear-gradient(to bottom,transparent 0 38px,rgba(26,24,19,.025) 38px 39px);
+    mix-blend-mode:multiply;}
+  .head{position:relative;z-index:2;display:flex;justify-content:flex-end;align-items:baseline;
+    font-family:var(--font-mono);font-size:clamp(10px,.95vw,12px);
+    letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);}
+  .head .tag{color:var(--btc-deep);font-weight:500;}
+  .foot{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;
+    padding-top:12px;border-top:1px solid var(--line);
+    font-family:var(--font-mono);font-size:clamp(9.5px,.95vw,11.5px);
+    letter-spacing:.1em;color:var(--ink-soft);}
+  .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:500;}
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--btc);}
+  a.brand{text-decoration:none;transition:color .15s ease;}
+  a.brand:hover{color:var(--btc-deep);}
+
+  /* ---- slide content ---- */
+  .c-body{position:relative;z-index:2;align-self:center;display:grid;gap:clamp(10px,1.5vw,18px);}
+  .c-kicker{font-family:var(--font-mono);font-size:clamp(10px,1vw,12.5px);
+    letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);}
+  .c-title{font-family:var(--font-display);font-weight:700;
+    font-size:clamp(26px,3.9vw,46px);line-height:1;letter-spacing:-.02em;}
+  .c-title .hl{color:var(--btc-deep);}
+
+  .c-cols{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(18px,2.6vw,38px);align-items:center;}
+
+  /* chart */
+  .chart-wrap{display:grid;gap:8px;}
+  .chart-cap{font-family:var(--font-mono);font-size:clamp(9.5px,.95vw,11.5px);
+    letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);}
+  svg.chart{width:100%;height:auto;display:block;}
+  .gridline{stroke:rgba(26,24,19,.12);stroke-width:1;}
+  .axis-lab{font-family:"IBM Plex Mono",monospace;font-size:11px;fill:#8d877a;}
+  .m2-line{fill:none;stroke:var(--btc);stroke-width:3;stroke-linejoin:round;stroke-linecap:round;}
+
+  /* calculation */
+  .calc{display:grid;gap:clamp(9px,1.2vw,13px);}
+  .calc-h{font-family:var(--font-display);font-weight:600;
+    font-size:clamp(15px,1.7vw,20px);letter-spacing:-.01em;}
+  .scn{background:var(--card);border:1px solid var(--line);border-radius:8px;
+    padding:clamp(11px,1.4vw,16px);}
+  .scn .top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;}
+  .scn .name{font-family:var(--font-mono);font-size:clamp(10px,1.05vw,12.5px);
+    letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);}
+  .scn .pct{font-family:var(--font-display);font-weight:700;color:var(--btc-deep);
+    font-size:clamp(22px,2.9vw,36px);line-height:1;}
+  .scn .desc{margin-top:6px;font-size:clamp(11.5px,1.2vw,14px);line-height:1.4;color:var(--ink);}
+  .scn .desc b{font-weight:600;}
+  .calc-note{font-family:var(--font-mono);font-size:clamp(9px,.92vw,10.8px);
+    line-height:1.45;letter-spacing:.02em;color:var(--ink-soft);}
+
+  /* ---- speaker guide (presenter only) ---- */
+  .guide{width:min(1180px,100%);background:#211e19;color:#E9E5DC;border-radius:5px;
+    border:1px solid rgba(247,147,26,.25);padding:clamp(20px,2.4vw,30px);}
+  .guide-head{display:flex;align-items:center;gap:10px;margin-bottom:16px;
+    font-family:var(--font-mono);font-size:clamp(10px,1vw,12px);
+    letter-spacing:.16em;text-transform:uppercase;color:var(--btc);}
+  .guide-head .pill{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;
+    color:#211e19;background:var(--btc);padding:3px 8px;border-radius:20px;}
+  .guide-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(16px,2vw,26px);}
+  .gblock h4{font-family:var(--font-display);font-weight:600;color:#fff;
+    font-size:clamp(13px,1.35vw,16px);margin-bottom:7px;}
+  .gblock h4 span{color:var(--btc);font-family:var(--font-mono);font-size:.7em;margin-right:7px;}
+  .gblock ul{list-style:none;display:grid;gap:6px;}
+  .gblock li{position:relative;padding-left:15px;
+    font-size:clamp(12px,1.25vw,14px);line-height:1.45;color:#C9C3B6;}
+  .gblock li::before{content:"›";position:absolute;left:0;color:var(--btc);font-weight:700;}
+  .gblock li b{color:#fff;font-weight:600;}
+  .guide-note{margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1);
+    font-family:var(--font-mono);font-size:clamp(10px,1vw,11.5px);
+    letter-spacing:.04em;color:#8d877a;}
+
+  @media (max-width:680px){
+    .c-cols{grid-template-columns:1fr;}
+    .guide-grid{grid-template-columns:1fr;}
+  }
+  /* ---- presenter mode toggle (one file, two modes) ---- */
+  .guide{display:none;}                          /* hidden by default → clean projection */
+  body.show-guide .guide{display:block;}
+  body{min-height:100vh;}
+  body:not(.show-guide){justify-content:center;} /* lone slide sits centered */
+  .guide-toggle{
+    position:fixed;right:18px;bottom:18px;z-index:60;
+    display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+    font-family:var(--font-mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:#1A1813;background:var(--btc);border:none;border-radius:24px;padding:10px 15px;
+    box-shadow:0 8px 22px -8px rgba(0,0,0,.55);opacity:.5;
+    transition:opacity .15s ease, transform .15s ease;
+  }
+  .guide-toggle:hover{opacity:1;transform:translateY(-1px);}
+  .guide-toggle:focus-visible{opacity:1;outline:2px solid #fff;outline-offset:2px;}
+  .guide-toggle .ic{width:7px;height:7px;border-radius:50%;background:#1A1813;}
+  body.show-guide .guide-toggle{opacity:1;}
+  @media print{.guide-toggle{display:none;}}
+</style>
+</head>
+<body>
+
+  <!-- ===================== AUDIENCE SLIDE ===================== -->
+  <section class="slide" role="img" aria-label="Slide: US money supply since 1970 and what 1000 dollars lost">
+    <header class="head">
+      <span class="tag">Module · The Money System</span>
+    </header>
+
+    <div class="c-body">
+      <div>
+        <p class="c-kicker">Foundations · The cost of infinite money</p>
+        <h1 class="c-title">38× more dollars. <span class="hl">Same $1,000.</span></h1>
+      </div>
+
+      <div class="c-cols">
+        <!-- CHART -->
+        <div class="chart-wrap">
+          <span class="chart-cap">U.S. money supply (M2), 1970 – 2026 · $ trillions</span>
+          <svg class="chart" viewBox="0 0 600 315" role="img" aria-label="M2 money supply rising from about 0.6 trillion in 1970 to 22.8 trillion in 2026">
+            <defs>
+              <linearGradient id="fill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#F7931A" stop-opacity="0.30"/>
+                <stop offset="100%" stop-color="#F7931A" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+
+            <!-- gridlines + y labels -->
+            <line class="gridline" x1="60" y1="300" x2="580" y2="300"/>
+            <line class="gridline" x1="60" y1="232.5" x2="580" y2="232.5"/>
+            <line class="gridline" x1="60" y1="165" x2="580" y2="165"/>
+            <line class="gridline" x1="60" y1="97.5" x2="580" y2="97.5"/>
+            <line class="gridline" x1="60" y1="30" x2="580" y2="30"/>
+            <text class="axis-lab" x="52" y="304" text-anchor="end">$0</text>
+            <text class="axis-lab" x="52" y="236" text-anchor="end">$6T</text>
+            <text class="axis-lab" x="52" y="169" text-anchor="end">$12T</text>
+            <text class="axis-lab" x="52" y="101" text-anchor="end">$18T</text>
+            <text class="axis-lab" x="52" y="34" text-anchor="end">$24T</text>
+
+            <!-- x labels -->
+            <text class="axis-lab" x="60"  y="312" text-anchor="middle">1970</text>
+            <text class="axis-lab" x="199" y="312" text-anchor="middle">1985</text>
+            <text class="axis-lab" x="339" y="312" text-anchor="middle">2000</text>
+            <text class="axis-lab" x="478" y="312" text-anchor="middle">2015</text>
+            <text class="axis-lab" x="580" y="312" text-anchor="end">2026</text>
+
+            <!-- area -->
+            <path fill="url(#fill)" d="M60,293.3 L106.4,288.8 L152.9,282 L199.3,271.9 L245.7,262.9 L292.1,258.4 L338.6,244.9 L385,224.6 L431.4,201 L477.9,161.6 L524.3,85.1 L542.9,55.9 L580,43.5 L580,300 L60,300 Z"/>
+            <!-- line -->
+            <path class="m2-line" d="M60,293.3 L106.4,288.8 L152.9,282 L199.3,271.9 L245.7,262.9 L292.1,258.4 L338.6,244.9 L385,224.6 L431.4,201 L477.9,161.6 L524.3,85.1 L542.9,55.9 L580,43.5"/>
+            <!-- endpoint dot -->
+            <circle cx="580" cy="43.5" r="4.5" fill="#F7931A"/>
+          </svg>
+        </div>
+
+        <!-- CALCULATION -->
+        <div class="calc">
+          <div class="calc-h">$1,000 saved in 1970, measured against the money supply today:</div>
+
+          <div class="scn">
+            <div class="top">
+              <span class="name">Held as cash · 0%</span>
+              <span class="pct">−97%</span>
+            </div>
+            <p class="desc">Worth about <b>$26</b> of its original share of all dollars.</p>
+          </div>
+
+          <div class="scn">
+            <div class="top">
+              <span class="name">At avg. interest · ~4.7%</span>
+              <span class="pct">−67%</span>
+            </div>
+            <p class="desc">Grew to <b>~$12,500</b> — but keeping pace with M2 needed <b>~$38,000</b>.</p>
+          </div>
+
+          <p class="calc-note">M2 ≈ $0.6T (1970) → $22.8T (2026), about 38×. Loss measured vs. money-supply
+            growth (debasement), not consumer prices. Interest = approx. average 3-month
+            U.S. T-bill, 1970–2025. Sources: Federal Reserve / FRED.</p>
+        </div>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <a class="brand" href="https://x.com/PitchingBTC" target="_blank" rel="noopener"><span class="dot"></span>@PitchingBTC</a>
+      <span>Source: Federal Reserve / FRED · 02 · Mix &amp; match</span>
+    </footer>
+  </section>
+
+  <!-- ===================== SPEAKER GUIDE ===================== -->
+  <aside class="guide">
+    <div class="guide-head"><span class="pill">Speaker Guide</span> How to present this slide · ~2–3 min</div>
+
+    <div class="guide-grid">
+      <div class="gblock">
+        <h4><span>01</span>Read the chart out loud</h4>
+        <ul>
+          <li>"This is every dollar in the U.S. money supply since 1970."</li>
+          <li>Flat for decades, then a <b>hockey stick</b> — point at the 2020 COVID spike.</li>
+          <li>The headline: <b>~38× more dollars</b> than in 1970.</li>
+        </ul>
+      </div>
+
+      <div class="gblock">
+        <h4><span>02</span>Run the $1,000 thought experiment</h4>
+        <ul>
+          <li>"Put <b>$1,000</b> under the mattress in 1970."</li>
+          <li>Today it's about <b>1/38th</b> of the money-supply share it had — like <b>$26</b>.</li>
+          <li>That's a <b>97%</b> dilution of your slice of the pie.</li>
+        </ul>
+      </div>
+
+      <div class="gblock">
+        <h4><span>03</span>Pre-empt the obvious objection</h4>
+        <ul>
+          <li>Someone will say: <b>"But I'd earn interest!"</b> Agree — it's a fair point.</li>
+          <li>At ~4.7% T-bills, $1,000 → <b>~$12,500</b>. Good… until you compare.</li>
+          <li>To merely keep your share of M2 you needed <b>~$38,000</b>. Still <b>−67%</b>.</li>
+        </ul>
+      </div>
+
+      <div class="gblock">
+        <h4><span>04</span>Stay honest, then transition</h4>
+        <ul>
+          <li>Be fair: vs. grocery prices (CPI) the loss is smaller — this is about <b>monetary debasement</b>, your share of the money.</li>
+          <li>The point: <b>you never agreed to be diluted</b>, and you can't opt out.</li>
+          <li>Bridge: <b>"Bitcoin is capped at 21 million. No one can vote to print more."</b></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="guide-note">Note for the presenter: chart values are rounded annual approximations of FRED series M2SL; the loss figures are measured against M2 growth, not consumer prices.</p>
+  </aside>
+
+  <!-- Presenter toggle: guide hidden by default · click, press N, or open with #notes -->
+  <button class="guide-toggle" id="guideToggle" aria-pressed="false" title="Toggle speaker guide (N)">
+    <span class="ic" aria-hidden="true"></span><span class="lbl">Speaker Guide</span>
+  </button>
+  <script>
+    (function(){
+      var body=document.body,
+          btn=document.getElementById('guideToggle'),
+          lbl=btn.querySelector('.lbl');
+      function set(on){
+        body.classList.toggle('show-guide', on);
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        lbl.textContent = on ? 'Hide guide' : 'Speaker Guide';
+      }
+      if(location.hash === '#notes') set(true);
+      btn.addEventListener('click', function(){ set(!body.classList.contains('show-guide')); });
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'n' || e.key === 'N'){ set(!body.classList.contains('show-guide')); }
+      });
+    })();
+  </script>
+</body>
+</html>
