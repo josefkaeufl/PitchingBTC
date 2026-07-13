@@ -9,7 +9,8 @@
    Leave the first and last line (window.SLIDES_TXT = ` … `;) intact.
    ============================================================ */
 window.SLIDES_TXT = `
-bitcoin-00-cover.html        | Cover
-bitcoin-01-money-system.html | The Money System
-bitcoin-02-m2-chart.html     | The Cost of Infinite Money
+00-cover.html               | Cover
+01-money-system.html        | The Money System
+02-m2-chart.html            | The Cost of Infinite Money
+03-bitcoin-game-theory.html | Bitcoin Game Theory
 `;
