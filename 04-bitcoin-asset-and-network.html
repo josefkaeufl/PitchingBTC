@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bitcoin Pitch · Asset and Network</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     BITCOIN PITCH — SHARED DESIGN SYSTEM (identical on every slide)
+     ============================================================ */
+  :root{
+    --paper:#F2F1EC;
+    --card:#FBFAF6;
+    --ink:#1A1813;
+    --ink-soft:#6E685D;
+    --btc:#F7931A;
+    --btc-deep:#C56F08;
+    --line:rgba(26,24,19,.14);
+    --font-display:"Space Grotesk",system-ui,sans-serif;
+    --font-mono:"IBM Plex Mono",ui-monospace,monospace;
+    --font-body:"Inter",system-ui,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{min-height:100%;}
+  body{
+    background:#2a2722;
+    display:flex;flex-direction:column;align-items:center;
+    gap:18px;padding:26px 24px 40px;
+    font-family:var(--font-body);
+  }
+
+  /* ---- the audience-facing slide (16:9) ---- */
+  .slide{
+    position:relative;
+    width:min(1180px,100%);
+    aspect-ratio:16/9;
+    background:var(--paper);color:var(--ink);
+    border-radius:5px;overflow:hidden;
+    box-shadow:0 40px 90px -34px rgba(0,0,0,.72);
+    display:grid;grid-template-rows:auto 1fr auto;
+    padding:clamp(26px,3.2vw,44px);
+  }
+  .slide::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:repeating-linear-gradient(to bottom,transparent 0 38px,rgba(26,24,19,.025) 38px 39px);
+    mix-blend-mode:multiply;
+  }
+  .head{
+    position:relative;z-index:2;display:flex;justify-content:flex-end;align-items:baseline;
+    font-family:var(--font-mono);font-size:clamp(10px,.95vw,12px);
+    letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);
+  }
+  .head .tag{color:var(--btc-deep);font-weight:500;}
+  .foot{
+    position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;
+    padding-top:12px;border-top:1px solid var(--line);
+    font-family:var(--font-mono);font-size:clamp(9.5px,.95vw,11.5px);
+    letter-spacing:.1em;color:var(--ink-soft);
+  }
+  .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:500;}
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--btc);}
+  a.brand{text-decoration:none;transition:color .15s ease;}
+  a.brand:hover{color:var(--btc-deep);}
+
+  /* ---- slide content ---- */
+  .m-body{position:relative;z-index:2;align-self:center;display:grid;gap:clamp(12px,1.7vw,20px);}
+  .m-kicker{
+    font-family:var(--font-mono);font-size:clamp(10px,1vw,12.5px);
+    letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);
+  }
+  .m-title{
+    font-family:var(--font-display);font-weight:700;
+    font-size:clamp(30px,4.7vw,56px);line-height:.98;letter-spacing:-.02em;
+  }
+  .m-title .hl{color:var(--btc-deep);}
+  .m-sub{font-size:clamp(13px,1.45vw,17px);line-height:1.45;color:var(--ink-soft);max-width:60ch;}
+
+  .m-cols{display:grid;grid-template-columns:1.35fr 1fr;gap:clamp(18px,2.6vw,40px);align-items:start;}
+
+  .points{list-style:none;display:grid;gap:clamp(8px,1.1vw,13px);}
+  .points li{
+    position:relative;padding-left:22px;
+    font-size:clamp(12.5px,1.32vw,15.5px);line-height:1.4;color:var(--ink);
+  }
+  .points li::before{
+    content:"";position:absolute;left:0;top:.5em;
+    width:8px;height:8px;background:var(--btc);transform:rotate(45deg);
+  }
+  .points b{font-weight:600;}
+
+  .stats{display:grid;gap:clamp(8px,1.1vw,12px);}
+  .stat{
+    background:var(--card);border:1px solid var(--line);border-radius:7px;
+    padding:clamp(10px,1.3vw,15px) clamp(12px,1.5vw,17px);
+    display:flex;align-items:baseline;gap:12px;
+  }
+  .stat .num{
+    font-family:var(--font-display);font-weight:700;color:var(--btc-deep);
+    font-size:clamp(20px,2.5vw,30px);line-height:1;letter-spacing:-.01em;white-space:nowrap;
+  }
+  .stat .lab{font-size:clamp(11px,1.15vw,13px);line-height:1.3;color:var(--ink-soft);}
+
+  /* ---- asset vs network matrix ---- */
+  .diagram{display:grid;gap:clamp(9px,1.2vw,15px);}
+  .insight{
+    background:rgba(247,147,26,.10);border:1px solid rgba(247,147,26,.35);border-radius:8px;
+    padding:clamp(8px,1vw,12px) clamp(13px,1.6vw,18px);
+    font-size:clamp(11px,1.18vw,14px);line-height:1.4;color:var(--ink);
+  }
+  .insight b{color:var(--btc-deep);font-weight:600;}
+  .insight .src{display:block;margin-top:5px;font-family:var(--font-mono);font-size:clamp(9px,.92vw,10.5px);letter-spacing:.02em;color:var(--ink-soft);}
+
+  .matrix{display:grid;grid-template-columns:1.15fr 1fr 1fr 1fr;gap:clamp(6px,.85vw,11px);align-items:stretch;}
+  .mcorner{}
+  .mh{font-family:var(--font-display);font-weight:700;font-size:clamp(15px,1.9vw,23px);text-align:center;align-self:end;padding:2px 0 6px;color:var(--ink);}
+  .mh.on{color:var(--btc-deep);}
+  .mrl{display:flex;flex-direction:column;justify-content:center;padding-right:4px;}
+  .mrl b{font-family:var(--font-display);font-weight:700;font-size:clamp(13px,1.55vw,19px);line-height:1.05;color:var(--ink);}
+  .mrl span{font-family:var(--font-mono);font-size:clamp(9px,.95vw,11px);letter-spacing:.04em;color:var(--ink-soft);margin-top:2px;}
+  .mcell{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:clamp(9px,1.1vw,13px);display:flex;gap:clamp(7px,.9vw,10px);align-items:flex-start;}
+  .mcell.hl{border:2px solid var(--btc);background:rgba(247,147,26,.06);}
+  .mark{flex:none;width:clamp(19px,2vw,23px);height:clamp(19px,2vw,23px);border-radius:50%;display:grid;place-items:center;font-size:clamp(11px,1.15vw,13px);font-weight:700;line-height:1;margin-top:1px;}
+  .mark.yes{background:var(--btc);color:#1A1813;}
+  .mark.no{background:transparent;border:1.6px solid rgba(26,24,19,.22);color:var(--ink-soft);}
+  .mcell p{margin:0;font-size:clamp(10.5px,1.12vw,13px);line-height:1.28;color:var(--ink-soft);}
+  .mcell.hl p{color:var(--ink);}
+
+  @media (max-width:820px){ .matrix{grid-template-columns:1fr;} .mh{text-align:left;} }
+
+  /* ============================================================
+     SPEAKER GUIDE — presenter only, not shown to the audience.
+     Crop to the .slide above when exporting an image for X.
+     ============================================================ */
+  .guide{
+    width:min(1180px,100%);
+    background:#211e19;color:#E9E5DC;
+    border-radius:5px;border:1px solid rgba(247,147,26,.25);
+    padding:clamp(20px,2.4vw,30px);
+  }
+  .guide-head{
+    display:flex;align-items:center;gap:10px;margin-bottom:16px;
+    font-family:var(--font-mono);font-size:clamp(10px,1vw,12px);
+    letter-spacing:.16em;text-transform:uppercase;color:var(--btc);
+  }
+  .guide-head .pill{
+    font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;
+    color:#211e19;background:var(--btc);padding:3px 8px;border-radius:20px;
+  }
+  .guide-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(16px,2vw,26px);}
+  .gblock h4{
+    font-family:var(--font-display);font-weight:600;color:#fff;
+    font-size:clamp(13px,1.35vw,16px);margin-bottom:7px;
+  }
+  .gblock h4 span{color:var(--btc);font-family:var(--font-mono);font-size:1.15em;font-weight:700;margin-right:8px;}
+  .gblock ul{list-style:none;display:grid;gap:6px;}
+  .gblock li{
+    position:relative;padding-left:15px;
+    font-size:clamp(12px,1.25vw,14px);line-height:1.45;color:#C9C3B6;
+  }
+  .gblock li::before{content:"›";position:absolute;left:0;color:var(--btc);font-weight:700;}
+  .gblock li b{color:#fff;font-weight:600;}
+  .guide-note{
+    margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1);
+    font-family:var(--font-mono);font-size:clamp(10px,1vw,11.5px);
+    letter-spacing:.04em;color:#8d877a;
+  }
+
+  @media (max-width:680px){
+    .m-cols{grid-template-columns:1fr;}
+    .guide-grid{grid-template-columns:1fr;}
+  }
+  /* ---- presenter mode toggle (one file, two modes) ---- */
+  .guide{display:none;}                          /* hidden by default → clean projection */
+  body.show-guide .guide{display:block;}
+  body{min-height:100vh;}
+  body:not(.show-guide){justify-content:center;} /* lone slide sits centered */
+  .guide-toggle{
+    position:fixed;right:18px;bottom:18px;z-index:60;
+    display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+    font-family:var(--font-mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:#1A1813;background:var(--btc);border:none;border-radius:24px;padding:10px 15px;
+    box-shadow:0 8px 22px -8px rgba(0,0,0,.55);opacity:.5;
+    transition:opacity .15s ease, transform .15s ease;
+  }
+  .guide-toggle:hover{opacity:1;transform:translateY(-1px);}
+  .guide-toggle:focus-visible{opacity:1;outline:2px solid #fff;outline-offset:2px;}
+  .guide-toggle .ic{width:7px;height:7px;border-radius:50%;background:#1A1813;}
+  body.show-guide .guide-toggle{opacity:1;}
+  @media print{.guide-toggle{display:none;}}
+</style>
+</head>
+<body>
+
+  <!-- ===================== AUDIENCE SLIDE ===================== -->
+  <section class="slide" role="img" aria-label="Slide: gold is an asset with no network, the dollar is a network but an IOU, and Bitcoin is uniquely both a monetary asset and a monetary network">
+    <header class="head">
+      <span class="tag">Module · What is Bitcoin</span>
+    </header>
+
+    <div class="m-body">
+      <div>
+        <p class="m-kicker">Foundations · What is Bitcoin</p>
+        <h1 class="m-title">Money’s two jobs. <span class="hl">Bitcoin does both.</span></h1>
+        <p class="m-sub">Gold is the asset with no network. A bank wire is a network you don’t own. Bitcoin is the first thing that’s both.</p>
+      </div>
+
+      <div class="diagram">
+        <div class="matrix">
+          <div class="mcorner"></div>
+          <div class="mh">Gold</div>
+          <div class="mh">The Dollar</div>
+          <div class="mh on">Bitcoin</div>
+
+          <div class="mrl"><b>Monetary asset</b><span>what you hold</span></div>
+          <div class="mcell"><span class="mark yes">✓</span><p>Bearer commodity — scarce, and yours to hold</p></div>
+          <div class="mcell"><span class="mark no">✗</span><p>An IOU — you deposit it; the rules can change (1971)</p></div>
+          <div class="mcell hl"><span class="mark yes">✓</span><p>A digital bearer instrument — yours alone</p></div>
+
+          <div class="mrl"><b>Monetary network</b><span>how it moves</span></div>
+          <div class="mcell"><span class="mark no">✗</span><p>No native network — you physically ship it</p></div>
+          <div class="mcell"><span class="mark yes">✓</span><p>Moves worldwide — but permissioned, slow, via banks</p></div>
+          <div class="mcell hl"><span class="mark yes">✓</span><p>Settles anywhere in seconds, near-free, permissionless</p></div>
+        </div>
+        <p class="insight"><b>Gold is a fine asset — but its “network” is a cargo plane and a passport.</b> Bitcoin is the first money that is both the bearer asset <i>and</i> the rails: you can send the equivalent of a gold bar across the world in seconds, for almost nothing, and no one can turn it into an IOU.<span class="src">Framing via Jack Mallers · The Jack Mallers Show</span></p>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <a class="brand" href="https://x.com/PitchingBTC" target="_blank" rel="noopener"><span class="dot"></span>@PitchingBTC</a>
+      <span>Mix &amp; match</span>
+    </footer>
+  </section>
+
+  <!-- ===================== SPEAKER GUIDE ===================== -->
+  <aside class="guide">
+    <div class="guide-head"><span class="pill">Speaker Guide</span> How to present this slide · ~3 min</div>
+
+    <div class="guide-grid">
+      <div class="gblock">
+        <h4><span>①</span>Money has two jobs</h4>
+        <ul>
+          <li>To be good money, a thing must be a good <b>asset</b> (hold value) <i>and</i> a good <b>network</b> (move value).</li>
+          <li>Almost everything is good at <b>one</b>, not both — that’s the whole tension.</li>
+          <li>Set up the table: three contenders, two rows.</li>
+        </ul>
+      </div>
+
+      <div class="gblock">
+        <h4><span>②</span>Gold: asset, no network</h4>
+        <ul>
+          <li>A superb <b>bearer asset</b> — scarce, physical, no counterparty.</li>
+          <li>But its “network” is a plane: to get gold across the world, someone <b>physically flies it there</b> — slow and costly.</li>
+          <li>Move it at scale and you hand it to a custodian who gives you <b>paper</b> — now it’s not bearer anymore.</li>
+        </ul>
+      </div>
+
+      <div class="gblock">
+        <h4><span>③</span>The dollar: network, no asset</h4>
+        <ul>
+          <li>Worth knowing: paper money <b>started life solving exactly this problem</b> — a dollar bill was originally a claim you could redeem for gold in a vault, i.e. gold plus a better network on top.</li>
+          <li>The banking system <b>is</b> a global network — but permissioned, slow and full of middlemen.</li>
+          <li>And the asset is an <b>IOU</b>: you deposit it and hold a claim, not the thing itself.</li>
+          <li><b>1971 (Nixon Shock):</b> the dollar’s tie to gold was cut for good — the network stayed, the backing didn’t. The rules changed under everyone’s feet.</li>
+        </ul>
+      </div>
+
+      <div class="gblock">
+        <h4><span>④</span>Bitcoin does both · bridge</h4>
+        <ul>
+          <li>It’s a <b>digital bearer asset</b> <i>and</i> a native global network: final settlement in seconds, near-free, permissionless.</li>
+          <li>Mallers’ image: it’s like <b>“faster gold”</b> you can throw across the planet — and convert to any currency at each end.</li>
+          <li>Bridge: <b>“So what is this asset actually worth — and why?”</b></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Presenter toggle: guide hidden by default · click, press N, or open with #notes -->
+  <button class="guide-toggle" id="guideToggle" aria-pressed="false" title="Toggle speaker guide (N)">
+    <span class="ic" aria-hidden="true"></span><span class="lbl">Speaker Guide</span>
+  </button>
+  <script>
+    (function(){
+      var body=document.body,
+          btn=document.getElementById('guideToggle'),
+          lbl=btn.querySelector('.lbl');
+      function set(on){
+        body.classList.toggle('show-guide', on);
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        lbl.textContent = on ? 'Hide guide' : 'Speaker Guide';
+      }
+      if(location.hash === '#notes') set(true);
+      btn.addEventListener('click', function(){ set(!body.classList.contains('show-guide')); });
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'n' || e.key === 'N'){ set(!body.classList.contains('show-guide')); }
+      });
+    })();
+  </script>
+</body>
+</html>
