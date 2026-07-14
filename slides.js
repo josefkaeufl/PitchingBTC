@@ -13,4 +13,5 @@ window.SLIDES_TXT = `
 01-money-system.html        | The Money System
 02-m2-chart.html            | The Cost of Infinite Money
 03-bitcoin-game-theory.html | Bitcoin Game Theory
+04-bitcoin-asset-and-network.html | Monetary Network
 `;
