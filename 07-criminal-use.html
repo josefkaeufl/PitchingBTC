@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bitcoin Pitch · Pseudonymous, Not Anonymous</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     BITCOIN PITCH — SHARED DESIGN SYSTEM (identical on every slide)
+     ============================================================ */
+  :root{
+    --paper:#F2F1EC;
+    --card:#FBFAF6;
+    --ink:#1A1813;
+    --ink-soft:#6E685D;
+    --btc:#F7931A;
+    --btc-deep:#C56F08;
+    --line:rgba(26,24,19,.14);
+    --font-display:"Space Grotesk",system-ui,sans-serif;
+    --font-mono:"IBM Plex Mono",ui-monospace,monospace;
+    --font-body:"Inter",system-ui,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{min-height:100%;}
+  body{
+    background:#2a2722;
+    display:flex;flex-direction:column;align-items:center;
+    gap:18px;padding:26px 24px 40px;
+    font-family:var(--font-body);
+  }
+
+  /* ---- the audience-facing slide (16:9) ---- */
+  .slide{
+    position:relative;
+    width:min(1180px,100%);
+    aspect-ratio:16/9;
+    background:var(--paper);color:var(--ink);
+    border-radius:5px;overflow:hidden;
+    box-shadow:0 40px 90px -34px rgba(0,0,0,.72);
+    display:grid;grid-template-rows:auto 1fr auto;
+    padding:clamp(26px,3.2vw,44px);
+  }
+  .slide::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:repeating-linear-gradient(to bottom,transparent 0 38px,rgba(26,24,19,.025) 38px 39px);
+    mix-blend-mode:multiply;
+  }
+  .head{
+    position:relative;z-index:2;display:flex;justify-content:flex-end;align-items:baseline;
+    font-family:var(--font-mono);font-size:clamp(10px,.95vw,12px);
+    letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);
+  }
+  .head .tag{color:var(--btc-deep);font-weight:500;}
+  .foot{
+    position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;
+    padding-top:12px;border-top:1px solid var(--line);
+    font-family:var(--font-mono);font-size:clamp(9.5px,.95vw,11.5px);
+    letter-spacing:.1em;color:var(--ink-soft);
+  }
+  .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:500;}
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--btc);}
+  a.brand{text-decoration:none;transition:color .15s ease;}
+  a.brand:hover{color:var(--btc-deep);}
+
+  /* ---- slide content ---- */
+  .m-body{position:relative;z-index:2;align-self:center;display:grid;gap:clamp(12px,1.7vw,20px);}
+  .m-kicker{
+    font-family:var(--font-mono);font-size:clamp(10px,1vw,12.5px);
+    letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);
+  }
+  .m-title{
+    font-family:var(--font-display);font-weight:700;
+    font-size:clamp(28px,4.3vw,50px);line-height:.98;letter-spacing:-.02em;
+  }
+  .m-title .hl{color:var(--btc-deep);}
+  .m-sub{font-size:clamp(13px,1.4vw,16.5px);line-height:1.45;color:var(--ink-soft);max-width:72ch;}
+
+  /* ---- explanatory flow diagram ---- */
+  .diagram{display:grid;gap:clamp(8px,1.1vw,13px);}
+  .flow{width:100%;height:auto;display:block;}
+  .insight{
+    background:rgba(247,147,26,.10);border:1px solid rgba(247,147,26,.35);border-radius:8px;
+    padding:clamp(8px,1vw,12px) clamp(13px,1.6vw,18px);
+    font-size:clamp(11px,1.15vw,13.5px);line-height:1.4;color:var(--ink);
+  }
+  .insight b{color:var(--btc-deep);font-weight:600;}
+
+  /* ---- speaker guide (presenter only) ---- */
+  .guide{
+    width:min(1180px,100%);
+    background:#211e19;color:#E9E5DC;
+    border-radius:5px;border:1px solid rgba(247,147,26,.25);
+    padding:clamp(20px,2.4vw,30px);
+  }
+  .guide-head{
+    display:flex;align-items:center;gap:10px;margin-bottom:16px;
+    font-family:var(--font-mono);font-size:clamp(10px,1vw,12px);
+    letter-spacing:.16em;text-transform:uppercase;color:var(--btc);
+  }
+  .guide-head .pill{
+    font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;
+    color:#211e19;background:var(--btc);padding:3px 8px;border-radius:20px;
+  }
+  .guide-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(16px,2vw,26px);}
+  .gblock h4{
+    font-family:var(--font-display);font-weight:600;color:#fff;
+    font-size:clamp(13px,1.35vw,16px);margin-bottom:7px;
+  }
+  .gblock h4 span{color:var(--btc);font-family:var(--font-mono);font-size:.7em;margin-right:7px;}
+  .gblock ul{list-style:none;display:grid;gap:6px;}
+  .gblock li{
+    position:relative;padding-left:15px;
+    font-size:clamp(12px,1.25vw,14px);line-height:1.45;color:#C9C3B6;
+  }
+  .gblock li::before{content:"›";position:absolute;left:0;color:var(--btc);font-weight:700;}
+  .gblock li b{color:#fff;font-weight:600;}
+  .guide-note{
+    margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1);
+    font-family:var(--font-mono);font-size:clamp(10px,1vw,11.5px);
+    letter-spacing:.04em;color:#8d877a;
+  }
+
+  @media (max-width:680px){
+    .guide-grid{grid-template-columns:1fr;}
+  }
+  /* ---- presenter mode toggle (one file, two modes) ---- */
+  .guide{display:none;}                          /* hidden by default → clean projection */
+  body.show-guide .guide{display:block;}
+  body{min-height:100vh;}
+  body:not(.show-guide){justify-content:center;} /* lone slide sits centered */
+  .guide-toggle{
+    position:fixed;right:18px;bottom:18px;z-index:60;
+    display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+    font-family:var(--font-mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:#1A1813;background:var(--btc);border:none;border-radius:24px;padding:10px 15px;
+    box-shadow:0 8px 22px -8px rgba(0,0,0,.55);opacity:.5;
+    transition:opacity .15s ease, transform .15s ease;
+  }
+  .guide-toggle:hover{opacity:1;transform:translateY(-1px);}
+  .guide-toggle:focus-visible{opacity:1;outline:2px solid #fff;outline-offset:2px;}
+  .guide-toggle .ic{width:7px;height:7px;border-radius:50%;background:#1A1813;}
+  body.show-guide .guide-toggle{opacity:1;}
+  @media print{.guide-toggle{display:none;}}
+</style>
+</head>
+<body>
+
+  <!-- ===================== AUDIENCE SLIDE ===================== -->
+  <section class="slide" role="img" aria-label="Slide: a Bitcoin address is public forever, an identity is not attached by default, but a single leak links the two and retroactively unmasks the address's whole history">
+    <header class="head">
+      <span class="tag">Module · Myths &amp; Objections</span>
+    </header>
+
+    <div class="m-body">
+      <div>
+        <p class="m-kicker">Myths &amp; objections · "Bitcoin is for criminals"</p>
+        <h1 class="m-title">Pseudonymous, <span class="hl">not anonymous.</span></h1>
+        <p class="m-sub">An address isn't an identity — until one link ties them together. From that moment on, the connection runs backward too.</p>
+      </div>
+
+      <div class="diagram">
+        <svg class="flow" viewBox="0 0 1080 316" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The address is public forever, the identity is hidden by default, but one leak links them and unmasks the whole history">
+          <defs>
+            <marker id="ah" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto">
+              <path d="M0,0 L7,3 L0,6 Z" fill="#C56F08"/>
+            </marker>
+          </defs>
+
+          <line x1="345" y1="160" x2="386" y2="160" stroke="#C56F08" stroke-width="2.5" marker-end="url(#ah)"/>
+          <line x1="695" y1="160" x2="736" y2="160" stroke="#C56F08" stroke-width="2.5" marker-end="url(#ah)"/>
+
+          <!-- CARD 1 - THE ADDRESS -->
+          <rect x="40" y="16" width="300" height="300" rx="12" fill="#FBFAF6" stroke="rgba(26,24,19,.14)"/>
+          <circle cx="70" cy="48" r="15" fill="#1A1813"/>
+          <text x="70" y="53" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="15" fill="#F2F1EC">1</text>
+          <text x="95" y="53" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="19" fill="#1A1813">The address</text>
+          <text x="314" y="253" text-anchor="end" font-family="'IBM Plex Mono',monospace" font-size="9.5" letter-spacing="1" fill="#6E685D">PUBLIC · FOREVER</text>
+
+          <rect x="66" y="86" width="248" height="132" rx="8" fill="#F2F1EC" stroke="rgba(26,24,19,.12)"/>
+          <text x="80" y="107" font-family="'IBM Plex Mono',monospace" font-size="10" letter-spacing="1" fill="#6E685D">bc1q7…9kx2 — FULL HISTORY</text>
+          <g font-family="'IBM Plex Mono',monospace" font-size="12.5">
+            <text x="80" y="136" fill="#1A1813">IN · 2021-03-11</text><text x="300" y="136" text-anchor="end" fill="#C56F08">0.42</text>
+            <text x="80" y="163" fill="#1A1813">OUT · 2022-11-02</text><text x="300" y="163" text-anchor="end" fill="#C56F08">0.15</text>
+            <text x="80" y="190" fill="#1A1813">OUT · 2023-07-04</text><text x="300" y="190" text-anchor="end" fill="#C56F08">0.27</text>
+          </g>
+          <text x="190" y="278" text-anchor="middle" font-family="'Inter',sans-serif" font-size="13" fill="#6E685D">Every amount, every timestamp —</text>
+          <text x="190" y="296" text-anchor="middle" font-family="'Inter',sans-serif" font-size="13" fill="#6E685D">visible to anyone, permanently.</text>
+
+          <!-- CARD 2 - THE IDENTITY -->
+          <rect x="390" y="16" width="300" height="300" rx="12" fill="#FBFAF6" stroke="rgba(26,24,19,.14)" stroke-dasharray="5 4"/>
+          <circle cx="420" cy="48" r="15" fill="#1A1813"/>
+          <text x="420" y="53" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="15" fill="#F2F1EC">2</text>
+          <text x="445" y="53" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="19" fill="#1A1813">The identity</text>
+          <text x="664" y="253" text-anchor="end" font-family="'IBM Plex Mono',monospace" font-size="9.5" letter-spacing="1" fill="#6E685D">HIDDEN · BY DEFAULT</text>
+
+          <circle cx="540" cy="150" r="46" fill="#F2F1EC" stroke="rgba(26,24,19,.16)" stroke-width="2"/>
+          <text x="540" y="167" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="42" fill="#6E685D">?</text>
+          <text x="540" y="278" text-anchor="middle" font-family="'Inter',sans-serif" font-size="13" fill="#6E685D">No name, no passport attached —</text>
+          <text x="540" y="296" text-anchor="middle" font-family="'Inter',sans-serif" font-size="13" fill="#1A1813">just a string of characters.</text>
+
+          <!-- CARD 3 - THE LINK -->
+          <rect x="740" y="16" width="300" height="300" rx="12" fill="#FBFAF6" stroke="#F7931A" stroke-width="2"/>
+          <circle cx="770" cy="48" r="15" fill="#F7931A"/>
+          <text x="770" y="53" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="15" fill="#1A1813">3</text>
+          <text x="795" y="53" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="19" fill="#1A1813">The link</text>
+          <text x="1014" y="253" text-anchor="end" font-family="'IBM Plex Mono',monospace" font-size="9.5" letter-spacing="1" fill="#6E685D">ONE LEAK · FOREVER</text>
+
+          <rect x="766" y="86" width="248" height="132" rx="8" fill="rgba(247,147,26,.10)" stroke="rgba(247,147,26,.4)"/>
+          <g font-family="'Inter',sans-serif" font-size="12" fill="#1A1813">
+            <rect x="780" y="98" width="98" height="24" rx="12" fill="#FBFAF6" stroke="rgba(26,24,19,.14)"/>
+            <text x="829" y="114" text-anchor="middle">Exchange KYC</text>
+            <rect x="886" y="98" width="86" height="24" rx="12" fill="#FBFAF6" stroke="rgba(26,24,19,.14)"/>
+            <text x="929" y="114" text-anchor="middle">IP address</text>
+            <rect x="780" y="130" width="108" height="24" rx="12" fill="#FBFAF6" stroke="rgba(26,24,19,.14)"/>
+            <text x="834" y="146" text-anchor="middle">Address reuse</text>
+            <rect x="896" y="130" width="98" height="24" rx="12" fill="#FBFAF6" stroke="rgba(26,24,19,.14)"/>
+            <text x="945" y="146" text-anchor="middle">One mistake</text>
+          </g>
+          <text x="890" y="180" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#C56F08">any ONE of these is enough</text>
+          <text x="890" y="200" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#C56F08">— now or decades later</text>
+
+          <text x="890" y="278" text-anchor="middle" font-family="'Inter',sans-serif" font-size="13" fill="#6E685D">One connection unmasks that address's</text>
+          <text x="890" y="296" text-anchor="middle" font-family="'Inter',sans-serif" font-size="13" fill="#1A1813">whole history — forward and backward.</text>
+        </svg>
+        <p class="insight"><b>Where it really bites:</b> anyone who needs to stay hidden for years <i>while remaining a prosecutable person</i> is betting that no leak, ever, ties back to them — which is exactly what didn't hold for the 2016 Bitfinex hack: one gift card, six years later, exposed the entire trail retroactively. Illicit activity is still under 1% of on-chain volume (Chainalysis 2026) vs. 2–5% of global GDP laundered via cash &amp; banks (UNODC) — though that gap owes as much to crypto's explosive legitimate growth and a shift toward mixers &amp; stablecoins as to anyone being deterred outright.</p>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <a class="brand" href="https://x.com/PitchingBTC" target="_blank" rel="noopener"><span class="dot"></span>@PitchingBTC</a>
+      <span>Source: Chainalysis 2026 Crypto Crime Report · UNODC · 07 · Mix &amp; match</span>
+    </footer>
+  </section>
+
+  <!-- ===================== SPEAKER GUIDE ===================== -->
+  <aside class="guide">
+    <div class="guide-head"><span class="pill">Speaker Guide</span> How to present this slide · ~3 min</div>
+
+    <div class="guide-grid">
+      <div class="gblock">
+        <h4><span>①</span>Fix the vocabulary first</h4>
+        <ul>
+          <li>"You've probably heard Bitcoin is a criminal's playground."</li>
+          <li>Correct one word: it's <b>pseudonymous</b>, not anonymous.</li>
+          <li>Card 1: the ledger — every amount, every timestamp — is <b>public, forever</b>.</li>
+        </ul>
+      </div>
+
+      <div class="gblock">
+        <h4><span>②</span>Show what's actually missing</h4>
+        <ul>
+          <li>Card 2: an address is <b>just a string</b> — no name attached by default.</li>
+          <li>That's the whole basis for "anonymous" — and it's thinner than people think.</li>
+          <li>It only takes <b>one</b> real-world link to close the gap.</li>
+        </ul>
+      </div>
+
+      <div class="gblock">
+        <h4><span>③</span>The link is the whole game</h4>
+        <ul>
+          <li>Card 3: KYC on an exchange, an IP address, reusing an address, one mistake.</li>
+          <li>Any single one is enough — and it works <b>retroactively</b>, not just going forward.</li>
+          <li>Unlike cash, nothing on the ledger can ever be edited or deleted.</li>
+        </ul>
+      </div>
+
+      <div class="gblock">
+        <h4><span>④</span>Be precise about the numbers, then bridge</h4>
+        <ul>
+          <li>The mechanism hits hardest for anyone needing to hide <b>for years while staying prosecutable</b> — proof in the wild: Bitfinex 2016 → 2022, one gift card, six years later, unraveled everything.</li>
+          <li><b>Under 1%</b> of on-chain volume is illicit (Chainalysis) vs <b>2–5% of global GDP</b> laundered via cash &amp; banks (UNODC) — but don't oversell this as "criminals are too smart for it." A fast-growing legit market and a shift to mixers/stablecoins explain much of that gap too.</li>
+          <li>Bridge: <b>"Cash and banks stay quiet. Bitcoin never forgets."</b></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="guide-note">Note for the presenter: keep the mechanism as the headline. Don't claim the low illicit-share figure proves criminals broadly avoid Bitcoin out of caution — nation-state actors (largely unprosecutable) and fast-moving scammers use it heavily regardless, and the shrinking share partly reflects the legitimate market's growth. Chainalysis's figure is a lower-bound estimate; the UNODC range is cited for scale, not a like-for-like methodology match.</p>
+  </aside>
+
+  <!-- Presenter toggle: guide hidden by default · click, press N, or open with #notes -->
+  <button class="guide-toggle" id="guideToggle" aria-pressed="false" title="Toggle speaker guide (N)">
+    <span class="ic" aria-hidden="true"></span><span class="lbl">Speaker Guide</span>
+  </button>
+  <script>
+    (function(){
+      var body=document.body,
+          btn=document.getElementById('guideToggle'),
+          lbl=btn.querySelector('.lbl');
+      function set(on){
+        body.classList.toggle('show-guide', on);
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        lbl.textContent = on ? 'Hide guide' : 'Speaker Guide';
+      }
+      if(location.hash === '#notes') set(true);
+      btn.addEventListener('click', function(){ set(!body.classList.contains('show-guide')); });
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'n' || e.key === 'N'){ set(!body.classList.contains('show-guide')); }
+      });
+    })();
+  </script>
+</body>
+</html>
