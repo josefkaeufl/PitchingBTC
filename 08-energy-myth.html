@@ -172,28 +172,31 @@
           <text x="58" y="24" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="12" fill="#1A1813">Example supermarkets — way more variety than anyone needs</text>
           <text x="58" y="37" font-family="'Inter',sans-serif" font-style="italic" font-size="9.5" fill="#6E685D">One everyday example of many — normal enough that we stopped questioning it</text>
 
-          <!-- symbolic row of generic supermarket storefronts (market-awning style) -->
-          <g fill="#F2F1EC" stroke="rgba(26,24,19,.14)">
-            <rect x="155" y="54" width="70" height="48" rx="3"/>
-            <rect x="235" y="54" width="70" height="48" rx="3"/>
-            <rect x="315" y="54" width="70" height="48" rx="3"/>
-          </g>
-          <g fill="#F7931A">
-            <path d="M155,54 L160,38 L170,54 L172,38 L182,54 L184,38 L194,54 L196,38 L206,54 L208,38 L218,54 L220,38 L225,54 Z"/>
-            <path d="M235,54 L240,38 L250,54 L252,38 L262,54 L264,38 L274,54 L276,38 L286,54 L288,38 L298,54 L300,38 L305,54 Z"/>
-            <path d="M315,54 L320,38 L330,54 L332,38 L342,54 L344,38 L354,54 L356,38 L366,54 L368,38 L378,54 L380,38 L385,54 Z"/>
-          </g>
-          <g fill="rgba(26,24,19,.18)">
-            <rect x="163" y="68" width="14" height="11" rx="1"/><rect x="203" y="68" width="14" height="11" rx="1"/>
-            <rect x="243" y="68" width="14" height="11" rx="1"/><rect x="283" y="68" width="14" height="11" rx="1"/>
-            <rect x="323" y="68" width="14" height="11" rx="1"/><rect x="363" y="68" width="14" height="11" rx="1"/>
-          </g>
-          <g fill="rgba(26,24,19,.4)">
-            <rect x="182" y="86" width="16" height="16" rx="1"/>
-            <rect x="262" y="86" width="16" height="16" rx="1"/>
-            <rect x="342" y="86" width="16" height="16" rx="1"/>
-          </g>
+          <!-- single, bold storefront icon: signage bar with label, body, window+door, big cart window, baseboard -->
 
+          <!-- baseboard -->
+          <rect x="210" y="98" width="120" height="5" rx="2" fill="rgba(26,24,19,.28)" stroke="rgba(26,24,19,.4)" stroke-width="1"/>
+
+          <!-- body -->
+          <rect x="215" y="51" width="110" height="47" rx="4" fill="#F5E6C8" stroke="#1A1813" stroke-width="2.2"/>
+
+          <!-- signage bar, protruding above the roofline -->
+          <rect x="250" y="42" width="40" height="9" rx="3" fill="#FBFAF6" stroke="#1A1813" stroke-width="2"/>
+          <text x="270" y="48.5" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="7" letter-spacing=".2" fill="#1A1813">MARKET</text>
+
+          <!-- left window -->
+          <rect x="225" y="57" width="22" height="13" rx="2" fill="#FBFAF6" stroke="#1A1813" stroke-width="1.6"/>
+
+          <!-- door -->
+          <rect x="225" y="75" width="22" height="23" rx="2" fill="#C99A64" stroke="#1A1813" stroke-width="1.6"/>
+          <circle cx="243" cy="86.5" r="1.2" fill="#1A1813"/>
+
+          <!-- big cart window -->
+          <rect x="257" y="57" width="58" height="41" rx="3" fill="#FBFAF6" stroke="#1A1813" stroke-width="2"/>
+          <polygon points="273,73 297,73 293,83 277,83" fill="#FBFAF6" stroke="#C56F08" stroke-width="2.2" stroke-linejoin="round"/>
+          <path d="M273,73 L269,66 L263,66" fill="none" stroke="#C56F08" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="279" cy="85" r="2" fill="#C56F08"/>
+          <circle cx="291" cy="85" r="2" fill="#C56F08"/>
 
           <text x="270" y="118" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#1A1813">≈3.3 GWh/store/yr (rough est.)</text>
           <text x="270" y="134" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="12.5" fill="#C56F08">× 45,575 US stores ≈ 150 TWh/yr — for variety nobody needs</text>
