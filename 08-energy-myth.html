@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bitcoin Pitch · Energy, Well Spent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     BITCOIN PITCH — SHARED DESIGN SYSTEM (identical on every slide)
+     ============================================================ */
+  :root{
+    --paper:#F2F1EC;
+    --card:#FBFAF6;
+    --ink:#1A1813;
+    --ink-soft:#6E685D;
+    --btc:#F7931A;
+    --btc-deep:#C56F08;
+    --line:rgba(26,24,19,.14);
+    --font-display:"Space Grotesk",system-ui,sans-serif;
+    --font-mono:"IBM Plex Mono",ui-monospace,monospace;
+    --font-body:"Inter",system-ui,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{min-height:100%;}
+  body{
+    background:#2a2722;
+    display:flex;flex-direction:column;align-items:center;
+    gap:18px;padding:26px 24px 40px;
+    font-family:var(--font-body);
+  }
+
+  /* ---- the audience-facing slide (16:9) ---- */
+  .slide{
+    position:relative;
+    width:min(1180px,100%);
+    aspect-ratio:16/9;
+    background:var(--paper);color:var(--ink);
+    border-radius:5px;overflow:hidden;
+    box-shadow:0 40px 90px -34px rgba(0,0,0,.72);
+    display:grid;grid-template-rows:auto 1fr auto;
+    padding:clamp(24px,3vw,40px);
+  }
+  .slide::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:repeating-linear-gradient(to bottom,transparent 0 38px,rgba(26,24,19,.025) 38px 39px);
+    mix-blend-mode:multiply;
+  }
+  .head{
+    position:relative;z-index:2;display:flex;justify-content:flex-end;align-items:baseline;
+    font-family:var(--font-mono);font-size:clamp(10px,.95vw,12px);
+    letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);
+  }
+  .head .tag{color:var(--btc-deep);font-weight:500;}
+  .foot{
+    position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;
+    padding-top:10px;border-top:1px solid var(--line);
+    font-family:var(--font-mono);font-size:clamp(9.5px,.95vw,11.5px);
+    letter-spacing:.1em;color:var(--ink-soft);
+  }
+  .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:500;}
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--btc);}
+  a.brand{text-decoration:none;transition:color .15s ease;}
+  a.brand:hover{color:var(--btc-deep);}
+  a.src{color:inherit;text-decoration:none;border-bottom:1px dotted rgba(26,24,19,.35);transition:color .15s ease,border-color .15s ease;}
+  a.src:hover{color:var(--btc-deep);border-bottom-color:var(--btc-deep);}
+
+  /* ---- slide content ---- */
+  .m-body{position:relative;z-index:2;align-self:center;display:grid;gap:clamp(7px,1vw,11px);}
+  .m-kicker{
+    font-family:var(--font-mono);font-size:clamp(9.5px,.9vw,11.5px);
+    letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);
+  }
+  .m-title{
+    font-family:var(--font-display);font-weight:700;
+    font-size:clamp(24px,3.4vw,40px);line-height:.98;letter-spacing:-.02em;
+  }
+  .m-title .hl{color:var(--btc-deep);}
+  .m-sub{font-size:clamp(12px,1.2vw,14.5px);line-height:1.35;color:var(--ink-soft);max-width:88ch;}
+
+  /* ---- explanatory flow diagram ---- */
+  .diagram{display:grid;gap:clamp(5px,.8vw,9px);}
+  .flow{width:100%;height:auto;display:block;}
+  .insight{
+    background:rgba(247,147,26,.10);border:1px solid rgba(247,147,26,.35);border-radius:8px;
+    padding:clamp(6px,.8vw,9px) clamp(12px,1.5vw,16px);
+    font-size:clamp(10px,1.02vw,12px);line-height:1.32;color:var(--ink);
+  }
+  .insight b{color:var(--btc-deep);font-weight:600;}
+
+  /* ---- speaker guide (presenter only) ---- */
+  .guide{
+    width:min(1180px,100%);
+    background:#211e19;color:#E9E5DC;
+    border-radius:5px;border:1px solid rgba(247,147,26,.25);
+    padding:clamp(20px,2.4vw,30px);
+  }
+  .guide-head{
+    display:flex;align-items:center;gap:10px;margin-bottom:16px;
+    font-family:var(--font-mono);font-size:clamp(10px,1vw,12px);
+    letter-spacing:.16em;text-transform:uppercase;color:var(--btc);
+  }
+  .guide-head .pill{
+    font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;
+    color:#211e19;background:var(--btc);padding:3px 8px;border-radius:20px;
+  }
+  .guide-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(16px,2vw,26px);}
+  .gblock h4{
+    font-family:var(--font-display);font-weight:600;color:#fff;
+    font-size:clamp(13px,1.35vw,16px);margin-bottom:7px;
+  }
+  .gblock h4 span{color:var(--btc);font-family:var(--font-mono);font-size:.7em;margin-right:7px;}
+  .gblock ul{list-style:none;display:grid;gap:6px;}
+  .gblock li{
+    position:relative;padding-left:15px;
+    font-size:clamp(12px,1.25vw,14px);line-height:1.45;color:#C9C3B6;
+  }
+  .gblock li::before{content:"›";position:absolute;left:0;color:var(--btc);font-weight:700;}
+  .gblock li b{color:#fff;font-weight:600;}
+  .guide-note{
+    margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1);
+    font-family:var(--font-mono);font-size:clamp(10px,1vw,11.5px);
+    line-height:1.5;letter-spacing:.02em;color:#8d877a;
+  }
+
+  @media (max-width:680px){
+    .guide-grid{grid-template-columns:1fr;}
+  }
+  /* ---- presenter mode toggle (one file, two modes) ---- */
+  .guide{display:none;}                          /* hidden by default → clean projection */
+  body.show-guide .guide{display:block;}
+  body{min-height:100vh;}
+  body:not(.show-guide){justify-content:center;} /* lone slide sits centered */
+  .guide-toggle{
+    position:fixed;right:18px;bottom:18px;z-index:60;
+    display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+    font-family:var(--font-mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:#1A1813;background:var(--btc);border:none;border-radius:24px;padding:10px 15px;
+    box-shadow:0 8px 22px -8px rgba(0,0,0,.55);opacity:.5;
+    transition:opacity .15s ease, transform .15s ease;
+  }
+  .guide-toggle:hover{opacity:1;transform:translateY(-1px);}
+  .guide-toggle:focus-visible{opacity:1;outline:2px solid #fff;outline-offset:2px;}
+  .guide-toggle .ic{width:7px;height:7px;border-radius:50%;background:#1A1813;}
+  body.show-guide .guide-toggle{opacity:1;}
+  @media print{.guide-toggle{display:none;}}
+</style>
+</head>
+<body>
+
+  <!-- ===================== AUDIENCE SLIDE ===================== -->
+  <section class="slide" role="img" aria-label="Slide: a quantified supermarket-duplication estimate compared to Bitcoin's total energy use, plus a diagram of flared gas, curtailed renewables and grid balancing feeding Bitcoin mining">
+    <header class="head">
+      <span class="tag">Module · Myths &amp; Objections</span>
+    </header>
+
+    <div class="m-body">
+      <div>
+        <p class="m-kicker">Myths &amp; objections · "Bitcoin wastes energy"</p>
+        <h1 class="m-title">Energy, <span class="hl">well spent.</span></h1>
+        <p class="m-sub">Yes, it uses real energy. Here's what that energy replaces — and where it actually comes from.</p>
+      </div>
+
+      <div class="diagram">
+        <!-- DIAGRAM 1: one everyday example of low-benefit energy use vs one global ledger (compact) -->
+        <svg class="flow" viewBox="0 0 1080 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A supermarket shelf carrying dozens of near-identical varieties is one of countless everyday habits that cost roughly 3.3 gigawatt-hours per year per store; scaled to all US supermarkets that is about 150 terawatt-hours per year, the same order of magnitude as Bitcoin's entire network, which secures scarcity, costly production, irreplaceable history and final global settlement instead">
+
+          <!-- LEFT PANEL -->
+          <rect x="40" y="8" width="460" height="134" rx="10" fill="#FBFAF6" stroke="rgba(26,24,19,.14)"/>
+          <text x="58" y="24" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="12" fill="#1A1813">Example supermarkets — way more variety than anyone needs</text>
+          <text x="58" y="37" font-family="'Inter',sans-serif" font-style="italic" font-size="9.5" fill="#6E685D">One everyday example of many — normal enough that we stopped questioning it</text>
+
+          <!-- symbolic row of generic supermarket storefronts (market-awning style) -->
+          <g fill="#F2F1EC" stroke="rgba(26,24,19,.14)">
+            <rect x="155" y="54" width="70" height="48" rx="3"/>
+            <rect x="235" y="54" width="70" height="48" rx="3"/>
+            <rect x="315" y="54" width="70" height="48" rx="3"/>
+          </g>
+          <g fill="#F7931A">
+            <path d="M155,54 L160,38 L170,54 L172,38 L182,54 L184,38 L194,54 L196,38 L206,54 L208,38 L218,54 L220,38 L225,54 Z"/>
+            <path d="M235,54 L240,38 L250,54 L252,38 L262,54 L264,38 L274,54 L276,38 L286,54 L288,38 L298,54 L300,38 L305,54 Z"/>
+            <path d="M315,54 L320,38 L330,54 L332,38 L342,54 L344,38 L354,54 L356,38 L366,54 L368,38 L378,54 L380,38 L385,54 Z"/>
+          </g>
+          <g fill="rgba(26,24,19,.18)">
+            <rect x="163" y="68" width="14" height="11" rx="1"/><rect x="203" y="68" width="14" height="11" rx="1"/>
+            <rect x="243" y="68" width="14" height="11" rx="1"/><rect x="283" y="68" width="14" height="11" rx="1"/>
+            <rect x="323" y="68" width="14" height="11" rx="1"/><rect x="363" y="68" width="14" height="11" rx="1"/>
+          </g>
+          <g fill="rgba(26,24,19,.4)">
+            <rect x="182" y="86" width="16" height="16" rx="1"/>
+            <rect x="262" y="86" width="16" height="16" rx="1"/>
+            <rect x="342" y="86" width="16" height="16" rx="1"/>
+          </g>
+
+
+          <text x="270" y="118" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#1A1813">≈3.3 GWh/store/yr (rough est.)</text>
+          <text x="270" y="134" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="12.5" fill="#C56F08">× 45,575 US stores ≈ 150 TWh/yr — for variety nobody needs</text>
+
+          <!-- divider -->
+          <line x1="540" y1="22" x2="540" y2="128" stroke="rgba(26,24,19,.16)" stroke-dasharray="3 5"/>
+          <circle cx="540" cy="75" r="16" fill="#F2F1EC" stroke="rgba(26,24,19,.18)"/>
+          <text x="540" y="72" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6.5" letter-spacing=".5" fill="#8d877a">SAME</text>
+          <text x="540" y="80" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6.5" letter-spacing=".5" fill="#8d877a">SCALE</text>
+
+          <!-- RIGHT PANEL: what that energy buys, reusing the value framework -->
+          <rect x="580" y="8" width="460" height="134" rx="10" fill="#FBFAF6" stroke="#F7931A" stroke-width="2"/>
+          <text x="598" y="26" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="13" fill="#1A1813">One global ledger — what it buys</text>
+
+          <rect x="598" y="36" width="207" height="46" rx="6" fill="rgba(247,147,26,.09)"/>
+          <text x="606" y="52" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="10.5" fill="#1A1813">Scarce</text>
+          <text x="606" y="66" font-family="'Inter',sans-serif" font-size="9" fill="#6E685D">21M cap, hard-coded</text>
+
+          <rect x="815" y="36" width="207" height="46" rx="6" fill="rgba(247,147,26,.09)"/>
+          <text x="823" y="52" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="10.5" fill="#1A1813">Costly to produce</text>
+          <text x="823" y="66" font-family="'Inter',sans-serif" font-size="9" fill="#6E685D">real energy secures it</text>
+
+          <rect x="598" y="86" width="207" height="46" rx="6" fill="rgba(247,147,26,.09)"/>
+          <text x="606" y="102" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="10.5" fill="#1A1813">Irreplaceable</text>
+          <text x="606" y="116" font-family="'Inter',sans-serif" font-size="9" fill="#6E685D">unique history, unforgeable</text>
+
+          <rect x="815" y="86" width="207" height="46" rx="6" fill="rgba(247,147,26,.09)"/>
+          <text x="823" y="102" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="10.5" fill="#1A1813">Useful</text>
+          <text x="823" y="116" font-family="'Inter',sans-serif" font-size="9" fill="#6E685D">final settlement, anywhere</text>
+        </svg>
+
+        <!-- DIAGRAM 2: where the "waste" energy comes from (more room now) -->
+        <svg class="flow" viewBox="0 0 1080 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flared gas, curtailed renewables, and grid-balancing curtailment all feed into Bitcoin mining, which acts as the buyer of last resort for energy nobody else wants">
+          <defs>
+            <marker id="ah2" markerWidth="8" markerHeight="8" refX="5.5" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" fill="#C56F08"/>
+            </marker>
+          </defs>
+
+          <!-- Tile 1: flared gas -->
+          <rect x="40" y="8" width="320" height="108" rx="10" fill="#FBFAF6" stroke="rgba(26,24,19,.14)"/>
+          <path d="M60,38 c-3.5,-8 1,-11.5 1,-17.5 c4.5,3.5 7,8 5.5,14 c3.5,-1 4.5,-3.5 3.5,-7 c3.5,4.5 3.5,10.5 1,14 c-3.5,3.5 -8,2.5 -11,-3.5 z" fill="#C56F08"/>
+          <text x="90" y="38" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="15" fill="#1A1813">Flared gas</text>
+          <text x="58" y="62" font-family="'Inter',sans-serif" font-size="11.5" fill="#6E685D">Burned off at the wellhead</text>
+          <text x="58" y="80" font-family="'Inter',sans-serif" font-size="11.5" fill="#6E685D">anyway — miners capture it</text>
+          <text x="58" y="98" font-family="'Inter',sans-serif" font-size="11.5" fill="#1A1813">instead of wasting it.</text>
+
+          <!-- Tile 2: curtailed renewables -->
+          <rect x="380" y="8" width="320" height="108" rx="10" fill="#FBFAF6" stroke="rgba(26,24,19,.14)"/>
+          <circle cx="412" cy="32" r="9" fill="none" stroke="#C56F08" stroke-width="2"/>
+          <g stroke="#C56F08" stroke-width="2">
+            <line x1="412" y1="16" x2="412" y2="11"/><line x1="412" y1="53" x2="412" y2="48"/>
+            <line x1="396" y1="32" x2="391" y2="32"/><line x1="433" y1="32" x2="428" y2="32"/>
+            <line x1="401" y1="21" x2="397" y2="17"/><line x1="423" y1="43" x2="427" y2="47"/>
+            <line x1="423" y1="21" x2="427" y2="17"/><line x1="401" y1="43" x2="397" y2="47"/>
+          </g>
+          <text x="450" y="38" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="15" fill="#1A1813">Curtailed renewables</text>
+          <text x="398" y="62" font-family="'Inter',sans-serif" font-size="11.5" fill="#6E685D">Grids already pay wind &amp;</text>
+          <text x="398" y="80" font-family="'Inter',sans-serif" font-size="11.5" fill="#6E685D">solar farms to switch off</text>
+          <text x="398" y="98" font-family="'Inter',sans-serif" font-size="11.5" fill="#1A1813">excess power.</text>
+
+          <!-- Tile 3: grid balancing -->
+          <rect x="720" y="8" width="320" height="108" rx="10" fill="#FBFAF6" stroke="rgba(26,24,19,.14)"/>
+          <path d="M750,16 l-11,22 l7.5,0 l-4.5,17 l16.5,-24 l-8.5,0 l6.5,-15 z" fill="#C56F08"/>
+          <text x="778" y="38" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="15" fill="#1A1813">Grid balancing</text>
+          <text x="738" y="62" font-family="'Inter',sans-serif" font-size="11.5" fill="#6E685D">Riot Platforms (TX) cut</text>
+          <text x="738" y="80" font-family="'Inter',sans-serif" font-size="11.5" fill="#6E685D">95%+ of load in the Aug 2023</text>
+          <text x="738" y="98" font-family="'Inter',sans-serif" font-size="11.5" fill="#1A1813">heatwave — earned $31.7M.</text>
+
+          <!-- arrows down into the bar -->
+          <line x1="200" y1="118" x2="200" y2="140" stroke="#C56F08" stroke-width="2" marker-end="url(#ah2)"/>
+          <line x1="540" y1="118" x2="540" y2="140" stroke="#C56F08" stroke-width="2" marker-end="url(#ah2)"/>
+          <line x1="880" y1="118" x2="880" y2="140" stroke="#C56F08" stroke-width="2" marker-end="url(#ah2)"/>
+
+          <!-- bottom bar -->
+          <rect x="40" y="144" width="1000" height="34" rx="17" fill="rgba(247,147,26,.12)" stroke="rgba(247,147,26,.4)"/>
+          <text x="540" y="166" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-weight="600" font-size="14.5" fill="#1A1813">Bitcoin mining: the buyer of last resort for energy nobody else wants</text>
+        </svg>
+
+        <p class="insight"><b>Same order of magnitude, wildly different payoff:</b> the supermarket estimate above is a transparent back-of-envelope calculation — full method in the speaker notes — but it shows Bitcoin's footprint isn't uniquely large, just uniquely visible and measurable, unlike the energy quietly baked into everyday retail. Cambridge puts <b>52%</b> of mining on sustainable sources.</p>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <a class="brand" href="https://x.com/PitchingBTC" target="_blank" rel="noopener"><span class="dot"></span>@PitchingBTC</a>
+      <span>Source: <a class="src" href="https://www.fmi.org/our-research/food-industry-facts" target="_blank" rel="noopener">FMI</a> · <a class="src" href="https://energysense.uillinois.edu/supermarkets/" target="_blank" rel="noopener">EIA/GreenChill</a> · <a class="src" href="https://ccaf.io/cbnsi/cbeci" target="_blank" rel="noopener">Cambridge CBECI/CCAF</a> · <a class="src" href="https://decrypt.co/71116/galaxy-digital-claims-banks-use-over-double-energy-bitcoin" target="_blank" rel="noopener">Galaxy Digital</a> · <a class="src" href="https://cryptoslate.com/bitcoin-miners-saved-the-texas-power-grid-from-collapse-but-their-lucrative-pivot-to-ai-is-stripping-away-the-emergency-brake/" target="_blank" rel="noopener">ERCOT</a> · 08 · Mix &amp; match</span>
+    </footer>
+  </section>
+
+  <!-- ===================== SPEAKER GUIDE ===================== -->
+  <aside class="guide">
+    <div class="guide-head"><span class="pill">Speaker Guide</span> How to present this slide · ~3–4 min</div>
+
+    <div class="guide-grid">
+      <div class="gblock">
+        <h4><span>①</span>Reframe, then actually rebut</h4>
+        <ul>
+          <li>"You've probably heard Bitcoin wastes huge amounts of energy."</li>
+          <li>Don't just deflect — give the comparison: everyday retail runs on a <b>similar scale</b>, invisibly.</li>
+          <li>The real question is what the energy buys and where it comes from — both halves matter.</li>
+        </ul>
+      </div>
+
+      <div class="gblock">
+        <h4><span>②</span>Walk the shelf diagram</h4>
+        <ul>
+          <li>One shelf, <b>30 near-identical varieties</b> — this is one everyday habit among countless others we've stopped questioning.</li>
+          <li>Rough estimate: <b>~3.3 GWh/store/yr</b> × 45,575 US supermarkets ≈ <b>~150 TWh/yr</b>.</li>
+          <li>That's the <b>same order of magnitude</b> as Bitcoin's entire network — for variety almost nobody actually needs.</li>
+          <li>Right side: the same <b>four traits of value</b> from the "What makes anything valuable?" slide — scarce, costly to produce, irreplaceable, useful. Reuse that language if you've shown that slide already.</li>
+        </ul>
+      </div>
+
+      <div class="gblock">
+        <h4><span>③</span>Walk the "where it comes from" diagram</h4>
+        <ul>
+          <li>Three real sources: <b>flared gas</b>, <b>curtailed wind &amp; solar</b>, and <b>grid balancing</b>.</li>
+          <li>All three are energy that would otherwise be burned off, switched off, or unused.</li>
+          <li>Proof in the wild: Riot Platforms, Texas, Aug 2023 — cut 95%+ load, earned <b>$31.7M</b> in grid payments.</li>
+        </ul>
+      </div>
+
+      <div class="gblock">
+        <h4><span>④</span>Land it with the sustainability number, bridge</h4>
+        <ul>
+          <li><b>52%</b> of Bitcoin mining now runs on sustainable sources (Cambridge, 2025) — above most national grids.</li>
+          <li>The point isn't "zero energy" — it's that Bitcoin's use is transparent and often literally otherwise-wasted.</li>
+          <li>Bridge: <b>"The energy is real. So is what it replaces — and most of it was headed for waste anyway."</b></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="guide-note">Supermarket estimate, step by step (rough, transparent, not peer-reviewed): ~42,000 sq ft average US store (FMI 2025) × ~51 kWh/sq ft/yr in-store electricity for lighting, refrigeration &amp; HVAC (EIA/GreenChill) ≈ 2.1 GWh/yr. Plus logistics: ~8 truck deliveries/day (industry-cited average) × ~120 km round trip × ~35 L diesel/100km × ~10 kWh/L ≈ 1.2 GWh/yr. Total ≈ 3.3 GWh/store/yr; × 45,575 US supermarkets (FMI 2024) ≈ 150 TWh/yr. Treat this as an order-of-magnitude comparison, not an exact figure — and note it captures a store's whole energy use, not only the "excess variety" share of it. Bitcoin figure: Cambridge CBECI (~138 TWh) vs Digiconomist (~204 TWh) diverge by methodology; give the range. Gold (~240 TWh) and banking (~264 TWh) comparisons are Galaxy Digital, 2021, and predate Bitcoin's growth — cite for scale only. The Riot Texas case is one company, one event.</p>
+  </aside>
+
+  <!-- Presenter toggle: guide hidden by default · click, press N, or open with #notes -->
+  <button class="guide-toggle" id="guideToggle" aria-pressed="false" title="Toggle speaker guide (N)">
+    <span class="ic" aria-hidden="true"></span><span class="lbl">Speaker Guide</span>
+  </button>
+  <script>
+    (function(){
+      var body=document.body,
+          btn=document.getElementById('guideToggle'),
+          lbl=btn.querySelector('.lbl');
+      function set(on){
+        body.classList.toggle('show-guide', on);
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        lbl.textContent = on ? 'Hide guide' : 'Speaker Guide';
+      }
+      if(location.hash === '#notes') set(true);
+      btn.addEventListener('click', function(){ set(!body.classList.contains('show-guide')); });
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'n' || e.key === 'N'){ set(!body.classList.contains('show-guide')); }
+      });
+    })();
+  </script>
+</body>
+</html>
