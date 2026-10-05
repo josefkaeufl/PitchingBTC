@@ -66,7 +66,7 @@
   a.brand:hover{color:var(--btc-deep);}
 
   /* ---- slide content ---- */
-  .m-body{position:relative;z-index:2;align-self:center;display:grid;gap:clamp(12px,1.7vw,20px);}
+  .m-body{position:relative;z-index:2;align-self:center;display:grid;gap:clamp(4px,.6vw,8px);}
   .m-kicker{
     font-family:var(--font-mono);font-size:clamp(10px,1vw,12.5px);
     letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);
@@ -76,7 +76,11 @@
     font-size:clamp(30px,4.7vw,56px);line-height:.98;letter-spacing:-.02em;
   }
   .m-title .hl{color:var(--btc-deep);}
-  .m-sub{font-size:clamp(13px,1.45vw,17px);line-height:1.45;color:var(--ink-soft);max-width:60ch;}
+  .m-sub{font-size:clamp(13px,1.45vw,17px);line-height:1.45;color:var(--ink-soft);}
+
+  /* ---- block-reward strip, full width, beneath everything ---- */
+  .reward{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:clamp(4px,.5vw,6px) clamp(10px,1.2vw,14px);}
+  .reward svg{display:block;width:100%;height:auto;}
 
   .m-cols{display:grid;grid-template-columns:1.35fr 1fr;gap:clamp(18px,2.6vw,40px);align-items:start;}
 
@@ -105,12 +109,8 @@
 
   /* ---- explanatory flow diagram ---- */
   .diagram{display:grid;gap:clamp(7px,1vw,12px);}
-  .flow{width:100%;height:auto;display:block;}
-  .insight{
-    background:rgba(247,147,26,.10);border:1px solid rgba(247,147,26,.35);border-radius:8px;
-    padding:clamp(8px,1vw,12px) clamp(13px,1.6vw,18px);
-    font-size:clamp(11px,1.18vw,14px);line-height:1.38;color:var(--ink);
-  }
+  .flow{width:100%;max-width:94%;margin:0 auto;height:auto;display:block;}
+  .insight{font-size:clamp(11.5px,1.22vw,14.5px);line-height:1.4;color:var(--ink);}
   .insight b{color:var(--btc-deep);font-weight:600;}
 
   /* ============================================================
@@ -178,7 +178,7 @@
 <body>
 
   <!-- ===================== AUDIENCE SLIDE ===================== -->
-  <section class="slide" role="img" aria-label="Slide: a block bundles transactions, mining makes writing costly, and the blockchain is the ever-growing history of every transaction">
+  <section class="slide" role="img" aria-label="Slide: a block bundles transactions, mining makes writing costly, the blockchain is the ever-growing history of every transaction, and the block reward keeps halving until only fees remain">
     <header class="head">
       <span class="tag">Module · What is Bitcoin</span>
     </header>
@@ -278,6 +278,51 @@
           <text x="890" y="250" text-anchor="middle" font-family="'Inter',sans-serif" font-size="12.5" fill="#6E685D">every transaction, chained in order.</text>
           <text x="890" y="278" text-anchor="middle" font-family="'Inter',sans-serif" font-size="12.5" fill="#1A1813">Replay it ⇒ balances · all keep a copy.</text>
         </svg>
+        <div class="reward">
+          <svg viewBox="0 0 1080 70" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The block reward halves about every four years, measured in BTC: 50, 25, 12.5, 6.25, 3.125 today. After the last bitcoin, around 2140, the reward is zero and only transaction fees remain; fees are paid in every block.">
+            <defs><marker id="ah2" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#C56F08"/></marker></defs>
+
+            <!-- legend / headline -->
+            <text x="14" y="15" font-family="'IBM Plex Mono',monospace" font-size="11" letter-spacing=".8" fill="#6E685D">BLOCK REWARD · BTC PER BLOCK</text>
+            <text x="14" y="31" font-family="'IBM Plex Mono',monospace" font-size="11" font-weight="500" letter-spacing=".8" fill="#C56F08">HALVES ~EVERY 4 YEARS</text>
+            <line x1="14" y1="50" x2="44" y2="50" stroke="#C56F08" stroke-width="2.5" stroke-dasharray="6 4"/>
+            <text x="52" y="54" font-family="'Inter',sans-serif" font-size="12.5" font-weight="600" fill="#1A1813">+ transaction fees in every block</text>
+
+            <!-- reward bars (BTC) -->
+            <g fill="#F7931A">
+              <rect x="300" y="20"   width="44" height="34"/>
+              <rect x="390" y="37"   width="44" height="17"/>
+              <rect x="480" y="45.5" width="44" height="8.5"/>
+              <rect x="570" y="49.8" width="44" height="4.2"/>
+              <rect x="660" y="51.9" width="44" height="2.1" stroke="#C56F08" stroke-width="1.5"/>
+            </g>
+            <g font-family="'IBM Plex Mono',monospace" font-size="13" font-weight="500" fill="#1A1813" text-anchor="middle">
+              <text x="322" y="16">50</text>
+              <text x="412" y="33">25</text>
+              <text x="502" y="41.5">12.5</text>
+              <text x="592" y="45.8">6.25</text>
+              <text x="682" y="48" fill="#C56F08" font-weight="700">3.125</text>
+            </g>
+            <g font-family="'IBM Plex Mono',monospace" font-size="11" fill="#6E685D" text-anchor="middle">
+              <text x="322" y="68">2009</text>
+              <text x="412" y="68">2012</text>
+              <text x="502" y="68">2016</text>
+              <text x="592" y="68">2020</text>
+              <text x="682" y="68">2024–now</text>
+            </g>
+
+            <!-- fees: always there, under bars and after the last bitcoin -->
+            <line x1="292" y1="56" x2="1080" y2="56" stroke="#C56F08" stroke-width="2.5" stroke-dasharray="6 4"/>
+
+            <!-- trend to zero -->
+            <line x1="724" y1="46" x2="812" y2="52" stroke="#C56F08" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#ah2)"/>
+
+            <!-- after the last bitcoin -->
+            <rect x="830" y="6" width="250" height="47" rx="9" fill="#1A1813"/>
+            <text x="955" y="22" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="11" letter-spacing=".7" fill="#F7931A">~2140 · LAST BITCOIN MINED</text>
+            <text x="955" y="44" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="19"><tspan fill="#F2F1EC">reward = 0 · </tspan><tspan fill="#F7931A">fees only</tspan></text>
+          </svg>
+        </div>
       </div>
     </div>
 
@@ -311,11 +356,13 @@
       </div>
 
       <div class="gblock">
-        <h4><span>③</span>Reward vs. penalty</h4>
+        <h4><span>③</span>Reward vs. penalty · and its future</h4>
         <ul>
           <li>Play fair → the block is accepted and the miner earns the <b>block reward + fees</b>.</li>
           <li>Cheat or submit an invalid block → the <b>electricity is spent for nothing</b> and it's rejected.</li>
           <li>So attacking literally costs more than it can pay. <b>Honesty is the profitable strategy.</b></li>
+          <li>Bottom strip: the <b>block reward halves every ~4 years</b> — 50 → 25 → 12.5 → 6.25 → <b>3.125 BTC</b> today (since April 2024). Measured in BTC it only ever goes down; its dollar value can still move with the price.</li>
+          <li>After the last bitcoin (~2140) the reward is zero — <b>miners live on fees alone</b> (the dashed line is the fees, present in every block, before and after). Expect the question: can fees alone secure the network? It is an open debate; the design bet is that demand for block space carries it.</li>
         </ul>
       </div>
 

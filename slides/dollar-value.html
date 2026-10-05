@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bitcoin Pitch · What Gives Things Value</title>
+<title>Bitcoin Pitch · What Gives the Dollar Value</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
@@ -78,7 +78,7 @@
   .m-title .hl{color:var(--btc-deep);}
   .m-sub{font-size:clamp(12.5px,1.3vw,15.5px);line-height:1.4;color:var(--ink-soft);max-width:76ch;}
 
-  /* ---- value matrix: trait | where we see it | in bitcoin ---- */
+  /* ---- value matrix: trait | where we see it | subject column ---- */
   .vmatrix{display:grid;grid-template-columns:1fr 1.5fr 1.5fr;gap:clamp(6px,.8vw,10px);align-items:stretch;}
   .vcorner{}
   .vh{font-family:var(--font-mono);font-size:clamp(9.5px,.95vw,11px);letter-spacing:.1em;text-transform:uppercase;align-self:end;padding:2px 4px 6px;color:var(--ink-soft);}
@@ -91,6 +91,11 @@
   .vcell p{margin:0;font-size:clamp(10px,1.05vw,12.5px);line-height:1.28;color:var(--ink-soft);}
   .vcell.hl p{color:var(--ink);}
   .vcell p b{font-weight:600;color:var(--ink);}
+
+  .vcell{gap:clamp(7px,.9vw,10px);}
+  .vmark{flex:none;width:clamp(19px,2vw,22px);height:clamp(19px,2vw,22px);border-radius:50%;display:grid;place-items:center;font-size:clamp(11px,1.1vw,12.5px);font-weight:700;line-height:1;}
+  .vmark.yes{background:var(--btc);color:#1A1813;}
+  .vmark.no{background:transparent;border:1.6px solid rgba(26,24,19,.22);color:var(--ink-soft);}
 
   .insight{
     background:rgba(247,147,26,.10);border:1px solid rgba(247,147,26,.35);border-radius:8px;
@@ -166,40 +171,40 @@
 <body>
 
   <!-- ===================== AUDIENCE SLIDE ===================== -->
-  <section class="slide" role="img" aria-label="Slide: things have value when they are scarce, costly to produce, irreplaceable, or useful — Bitcoin combines all four">
+  <section class="slide" role="img" aria-label="Slide: the US dollar is useful, but not scarce, not costly to produce and not irreplaceable">
     <header class="head">
-      <span class="tag">Module · What is Value</span>
+      <span class="tag">Module · The Dollar's Value</span>
     </header>
 
     <div class="m-body">
       <div>
-        <p class="m-kicker">Foundations · What gives things value?</p>
-        <h1 class="m-title">What makes anything <span class="hl">valuable?</span></h1>
-        <p class="m-sub">Scarce. Costly to make. Irreplaceable. Useful. Humans have always paid up for these traits — alone or in combination.</p>
+        <p class="m-kicker">Foundations · What gives the dollar value?</p>
+        <h1 class="m-title">What makes the <span class="hl">dollar</span> valuable?</h1>
+        <p class="m-sub">Run the money in your wallet through the same four tests.</p>
       </div>
 
       <div class="vmatrix">
         <div class="vcorner"></div>
         <div class="vh">Where we already see it</div>
-        <div class="vh on">In Bitcoin</div>
+        <div class="vh on">In the US dollar</div>
 
         <div class="vrl"><b>Scarce</b><span>fixed or limited supply</span></div>
         <div class="vcell"><p>Gold, diamonds, <b>your own time</b> — nobody can make more of it on demand.</p></div>
-        <div class="vcell hl"><p><b>21 million cap</b>, hard-coded and enforced by every node — no one can print more.</p></div>
+        <div class="vcell"><span class="vmark no">✗</span><p><b>No fixed cap</b> — supply is set by the Federal Reserve and by bank lending.</p></div>
 
         <div class="vrl"><b>Costly to produce</b><span>labor or energy intensive</span></div>
         <div class="vcell"><p>Tons of ore moved to refine gold; a diamond cut from rock deep underground.</p></div>
-        <div class="vcell hl"><p>Real-world <b>energy and hardware</b> are spent to mine each block — its history is provably expensive to write.</p></div>
+        <div class="vcell"><span class="vmark no">✗</span><p>A $100 bill costs <b>about 11¢ to print</b>; most dollars are digital entries that cost almost nothing.</p></div>
 
         <div class="vrl"><b>Irreplaceable</b><span>no substitute exists</span></div>
         <div class="vcell"><p>An old photograph, a handwritten letter, a memory — the original or nothing.</p></div>
-        <div class="vcell hl"><p>Every coin's <b>transaction history</b> is unique and unforgeable — provenance you can't fake.</p></div>
+        <div class="vcell"><span class="vmark no">✗</span><p><b>Every dollar is identical</b> — and competes with every other currency.</p></div>
 
         <div class="vrl"><b>Useful</b><span>enables what you couldn't do before</span></div>
         <div class="vcell"><p>A tool, a car, electricity — it extends what you're capable of.</p></div>
-        <div class="vcell hl"><p><b>Final, global settlement</b> — move value anywhere, in seconds, without asking anyone's permission.</p></div>
+        <div class="vcell hl"><span class="vmark yes">✓</span><p><b>Legal tender</b> — U.S. taxes are owed in it. For decades <b>nearly all oil was sold in dollars</b>. And borrowers outside the U.S. owe <b>~$15 trillion in dollars</b> — they must earn dollars to repay.</p></div>
 
-        <div class="insight" style="grid-column:1/-1;"><b>Value is rarely just one of these — it's usually a combination.</b> Gold is scarce and costly to produce, but hard to move and easy to substitute. Bitcoin is the rare case where all four traits stack in a single asset.</div>
+        <div class="insight" style="grid-column:1/-1;"><b>The dollar's value rests mainly on one trait: usefulness.</b> Demand — from law, trade convention and debt — carries it, not scarcity, cost, or irreplaceability.</div>
       </div>
     </div>
 
@@ -214,41 +219,49 @@
     <div class="guide-head"><span class="pill">Speaker Guide</span> How to present this slide · ~3 min</div>
 
     <div class="guide-grid">
+
       <div class="gblock">
         <h4><span>①</span>Scarce</h4>
         <ul>
-          <li>Ask the audience: <b>why is gold valuable and not, say, sand?</b> Supply.</li>
-          <li>Bitcoin's 21M cap isn't a promise — it's enforced by every participant running the software. To change it, everyone would have to agree to devalue their own holdings. Nobody does.</li>
+          <li>Ask the audience: <b>how many dollars exist — and who decides?</b> There is no fixed number.</li>
+          <li>Supply is shaped by Federal Reserve policy and by bank lending. That flexibility is a deliberate tool — it also means no rule caps the supply.</li>
+          <li>If the M2 slide is in your deck, point back to it.</li>
         </ul>
       </div>
 
       <div class="gblock">
         <h4><span>②</span>Costly to produce</h4>
         <ul>
-          <li>Things that are <b>hard to fake cheaply</b> earn trust. That's why we don't value a photocopy of a painting.</li>
-          <li>Mining converts real energy into security: rewriting Bitcoin's history would cost more than any attacker could gain.</li>
+          <li>A $100 bill costs about <b>11 cents</b> in printing costs (Federal Reserve, 2025 currency budget).</li>
+          <li>And cash is the small part: most dollars exist only as digital entries — practically free to create.</li>
+          <li>Contrast with gold: tons of ore moved for every ounce.</li>
         </ul>
       </div>
 
       <div class="gblock">
         <h4><span>③</span>Irreplaceable</h4>
         <ul>
-          <li>This one is emotional, not economic — a childhood photo has no substitute at any price.</li>
-          <li>Every bitcoin carries its own full history back to creation — that provenance can't be copied onto a fake.</li>
+          <li>Fungibility is a feature of money: you want any dollar to be as good as any other.</li>
+          <li>The flip side: no single dollar is special, and the dollar competes with every other currency for the same job.</li>
         </ul>
       </div>
 
       <div class="gblock">
-        <h4><span>④</span>Useful · bridge</h4>
+        <h4><span>④</span>Useful · land it</h4>
         <ul>
-          <li>Usefulness is what turns scarcity into <b>demand</b> — a scarce but useless thing stays a curiosity.</li>
-          <li>Bitcoin's usefulness is the network itself: final settlement anywhere, for anyone, without permission.</li>
-          <li>Bridge: <b>"Most valuable things have one or two of these. Bitcoin is the first asset with all four at once — that's worth sitting with."</b></li>
+          <li>This is where the dollar is genuinely strong: <b>legal tender, taxes owed in dollars, universal acceptance, reserve currency.</b></li>
+          <li><b>Oil:</b> in the 1970s the U.S. and Saudi Arabia agreed that oil would be priced in dollars, and other exporters followed. Importers first had to acquire dollars — demand by convention, not by law.</li>
+          <li>Be precise about today: there are no official figures; estimates put roughly 70–80% of oil trade still in dollars, with the share slowly falling.</li>
+          <li><b>Debt:</b> governments and companies outside the U.S. owe about <b>$14.7 trillion in dollar debt</b> (BIS, March 2026), roughly 30% of it in emerging markets. To repay, they must earn or buy dollars — often by selling commodities priced in dollars.</li>
+          <li>The compulsion is <b>after the fact</b>: borrowers chose dollars because it is the deepest market, but once they owe dollars, they need dollars. When the dollar strengthens or U.S. rates rise, repaying gets harder — Latin America in the 1980s, Asia in 1997.</li>
+          <li>Concede it openly — the slide does not say the dollar is worthless. It shows <b>what its value rests on.</b></li>
+          <li>Takeaway: <b>"The dollar's value comes from what everyone agrees to do with it — a network of law and habit."</b></li>
+          <li>Closing question for any money: <b>"What is its value resting on?"</b></li>
         </ul>
       </div>
     </div>
 
-    <div class="guide-note">This is a foundations slide — it works standing alone or right before any Bitcoin-specific slide in the deck.</div>
+    <div class="guide-note">Works standing alone, or as the lead-in to a side-by-side comparison. Print cost: Federal Reserve, 2025 currency budget (variable printing cost, $100 note: 11.3¢). Oil: 1970s U.S.–Saudi understanding; current dollar share is an estimate, not an official figure. Debt: BIS global liquidity indicators, end-March 2026 (USD debt of borrowers outside the U.S.: $14.7 trillion).</div>
   </aside>
 
   <!-- Presenter toggle: guide hidden by default · click, press N, or open with #notes -->

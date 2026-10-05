@@ -9,39 +9,58 @@ your own talk, share single slides on X, or present the whole deck.
 
 **One idea = one slide = one file.** Each slide is a complete, self-contained HTML
 file with no dependencies. Slides are freely combinable, individually shareable,
-and all share the same design. The running order lives in one place: `slides.js`.
+and all share the same design.
 
-## Files
+## What's what
 
-| File | Purpose |
-|------|---------|
-| `present.html` | The player — shows the deck and steps through it. |
-| `slides.js` | The order — edit this to change your talk. |
-| `bitcoin-00-cover.html` | Cover slide |
-| `bitcoin-01-money-system.html` | “Money is created from nothing” (with speaker notes) |
-| `bitcoin-02-m2-chart.html` | M2 chart since 1970 + the “$1,000” calculation (with speaker notes) |
+```
+PitchingBTC/
+├── present.html      FIXED     The player — don't touch, just open it.
+├── cover.html        FIXED     Cover slide (optional, remove its line in slides.js if you don't want it)
+├── slides.js         YOURS     The running order of your talk — the one file you edit.
+└── slides/           PICK      All topic slides. Choose the ones you want.
+    ├── money-system.html
+    ├── m2-chart.html
+    ├── bitcoin-game-theory.html
+    ├── value.html
+    ├── bitcoin-asset-and-network.html
+    ├── gold-and-money.html
+    ├── criminal-use.html
+    └── energy-myth.html
+```
+
+| Where | Role | What you do |
+|-------|------|-------------|
+| `present.html` | Player (fixed) | Open it to present. |
+| `cover.html` | Cover (fixed) | Keep it as opener or drop it. |
+| `slides.js` | Your configuration | Choose, order and title the slides of your talk. |
+| `slides/` | Slide library | Pick from it, or add your own slide here. |
 
 ## Use it
 
-- **Show one slide:** double-click the file, press `F11` for fullscreen. That's it.
-- **Present the deck:** open `present.html`. Move with `→` / `←` / Space / the on-screen
+- **Show one slide:** open a file from `slides/` (double-click), press `F11` for fullscreen.
+- **Present a deck:** open `present.html`. Move with `→` / `←` / Space / the on-screen
   arrows, press `F` for fullscreen.
 
 No installation, no server — just open the files in a browser.
 
-## Change the order
+## Build your own talk
 
 Open `slides.js` and edit the lines between the back-ticks — one slide per line,
-`filename.html | Title`:
+`path | Title`:
 
 ```
-bitcoin-00-cover.html        | Cover
-bitcoin-01-money-system.html | The Money System
-bitcoin-02-m2-chart.html     | The Cost of Infinite Money
+cover.html                  | Cover
+slides/money-system.html    | The Money System
+slides/value.html           | What Gives Things Value
+slides/energy-myth.html     | Energy, Well Spent
 ```
 
-Reorder by moving lines, remove a slide by deleting its line, add one by writing a
-new line. Save, reload — done.
+- **Select:** keep only the lines for the slides you want (or comment out with `#`).
+- **Reorder:** move lines.
+- **Add:** write a new line pointing to a file in `slides/`.
+
+Save, reload `present.html` — done.
 
 ## Speaker notes
 
@@ -51,8 +70,9 @@ with notes already showing. Inside the player the button stays hidden.
 
 ## Add your own slide
 
-Copy an existing `bitcoin-XX-*.html`, edit the content (keep the header/footer and
-the `:root` block so the design matches), then add its filename to `slides.js`.
+Copy an existing file from `slides/`, edit the content (keep the header/footer and
+the `:root` block so the design matches), save it in `slides/`, then add a line
+`slides/your-file.html | Title` to `slides.js`.
 
 ## Share on X
 
